@@ -10,8 +10,10 @@ use App\Models\Classroom;
 use App\Models\Faculty;
 use App\Models\Department;
 use App\Enums\MessageType;
-use App\Http\Resources\ClassroomResource;
+use App\Http\Resources\Admin\ClassroomResource;
 use App\Http\Requests\Admin\ClassroomRequest;
+use App\Models\AcademicYear;
+
 
 
 
@@ -23,7 +25,7 @@ class ClassroomController extends Controller
             ->select(columns: ['id', 'faculty_id', 'department_id', 'academic_year_id', 'name', 'slug', 'created_at'])
             ->filter(request()->only(keys: ['search']))
             ->sorting(request()->only(keys: ['field', 'direction']))
-            ->with(relations: ['factory', 'department', 'academicYear'])
+            ->with(['faculty', 'department', 'academicYear'])
             ->paginate(perPage: request()->load ?? 10);
 
         return inertia(component: 'Admin/Classrooms/Index', props:[
@@ -31,7 +33,7 @@ class ClassroomController extends Controller
                 'title' => 'Kelas',
                 'subtitle' => 'Menampilkan semua data kelas yg tersedia pada uneversitas ini.',
             ],
-            'calssrooms' => ClassroomResource::collection(resource: $classrooms)->additional(data : [
+            'classrooms' => ClassroomResource::collection(resource: $classrooms)->additional(data : [
                 'meta' => [
                     'has_pages' => $classrooms->hasPages(),
                 ],
@@ -53,26 +55,35 @@ class ClassroomController extends Controller
                 'method' => 'POST',
                 'action' => route('admin.classrooms.store'),
             ],
+            'academic_year' => activeAcademicYear(),
             'faculties' => Faculty::query()->select(['id', 'name'])->orderBy('name')->get()->map(fn($item) => [
                 'value' => $item->id,
                 'label' => $item->name, 
             ]),
-            'department' => Department::query()->select(['id', 'name'])->orderBy('name')->get()->map(fn($item) => [
+            'departments' => Department::query()->select(['id', 'name'])->orderBy('name')->get()->map(fn($item) => [
                 'value' => $item->id,
                 'label' => $item->name, 
             ]),
         ]);
+
     }
 
     public function store(ClassroomRequest $request): RedirectResponse
     {
         try{
-            Classroom::create([
-                'faculty_id' => $request->faculty_id,
-                'department_id' => $request->department_id,
-                'academic_year_id' => activeAcademicYear()->id,
-                'name' => $request -> name,
-            ]);
+        $academicYear = activeAcademicYear();
+
+        if (!$academicYear) {
+            flashMessage('Tahun ajaran aktif tidak ditemukan. Silakan atur tahun ajaran aktif terlebih dahulu.', 'error');
+            return to_route('admin.classrooms.index');
+        }
+
+        Classroom::create([
+            'faculty_id' => $request->faculty_id,
+            'department_id' => $request->department_id,
+            'academic_year_id' => $academicYear->id,
+            'name' => $request->name,
+        ]);
 
             flashMessage(MessageType::CREATED->message('Kelas'));
             return to_route('admin.classrooms.index');
@@ -120,10 +131,10 @@ class ClassroomController extends Controller
         }
     }
     
-    public function destory(Classroom $classroom):RedirectResponse
+    public function destroy(Classroom $classroom):RedirectResponse
     {
         try {
-            classroom->delete();
+            $classroom->delete(); // ✅
             flashMessage(MessageType::DELETED->message('Kelas'));
             return to_route('admin.classrooms.index');
 

@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\AcademicYear;
+
 
 if(!function_exists('flashMessage')) {
     function flashMessage($message, $type = 'success'): void
@@ -19,7 +21,7 @@ if(!function_exists('signatureMidtrans')) {
 if(!function_exists('activeAcademicYear')) {
     function activeAcademicYear()
     {
-        return activeAcademicYear::query()->where('is_active', true)->first();
+        return AcademicYear::query()->where('is_active', true)->first();
     }
 }
 

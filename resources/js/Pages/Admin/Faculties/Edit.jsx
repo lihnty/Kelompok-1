@@ -1,24 +1,26 @@
-import AppLayout from '@/Layouts/AppLayout';
+import {AppLayout} from '@/Layouts/AppLayout';
 import { Link, Head, useForm } from '@inertiajs/react'; 
 import { IconBuildingSkyscraper, IconPlus, IconArrowLeft, IconCheck } from '@tabler/icons-react';
 import HeaderTitle from '@/Components/HeaderTitle';
 import { Button } from '@/Components/ui/button';
 import { Card, CardContent } from '@/Components/ui/card'; 
 import { Label } from '@/Components/ui/label';
-import Input from '@/Components/Input'; 
 import InputError from '@/Components/InputError'; 
 import { useRef } from 'react';
-import { toast } from 'react-hot-toast'; 
+import { toast } from 'sonner';
+import { flashMessage } from '@/lib/utils';
+import { Input } from '@/Components/ui/input';
 
 export default function Edit(props){
 
     const fileInputLogo = useRef(null);
 
-    const { data, setData, post, processing, errors } = useForm({
-        name: props.faculty.name '',
+    const { data, setData, post, processing, errors, reset } = useForm({
+        name: props.faculty.name,
         logo: null,
         _method: props.page_settings.method,
     });
+
 
     const onHandleReset = () => {
         reset();

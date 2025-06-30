@@ -8,7 +8,7 @@ use Inertia\Response;
 use Inertia\Inertia;
 use App\Models\Faculty;
 use App\Http\Resources\Admin\FacultyResource;
-use App\Http\Requests\FacultyRequest; 
+use App\Http\Requests\Admin\FacultyRequest; 
 use Illuminate\Http\RedirectResponse; 
 use Throwable; 
 use App\Enums\MessageType; 

@@ -1,20 +1,22 @@
+import {AppLayout} from '@/Layouts/AppLayout';
 import HeaderTitle from '@/Components/HeaderTitle';
-import Input from '@/Components/Input';
 import InputError from '@/Components/InputError';
 import { Button } from '@/Components/ui/button';
 import { Card, CardContent } from '@/Components/ui/card';
 import { Label } from '@/Components/ui/label';
-import AppLayout from '@/Layouts/AppLayout';
-import { flashMessage } from '@/Iib/utils';
 import { Link, useForm } from '@inertiajs/react';
 import { IconArrowLeft, IconCheck, IconDoor } from '@tabler/icons-react';
-import { toast } from 'react-hot-toast';
+import { toast } from 'sonner';
+import { Input } from '@/Components/ui/input';
+import { flashMessage } from '@/lib/utils';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/Components/ui/select';
+
 
 export default function Create(props) {
     const { data, setData, post, processing, errors, reset } = useForm({
         faculty_id: null,
         department_id: null,
-        academic_year_id: props.academic_year.name,
+        academic_year_id: props.academic_year?.name ?? '',
         name: '',
         _method: props.page_settings.method,
     });

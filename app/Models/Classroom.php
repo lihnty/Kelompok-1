@@ -74,7 +74,7 @@ class Classroom extends Model
     public function scopeFilter(Builder $query, array $filters): void
     {
 
-        $query->when( this: $filters['search'] ?? null, value: function ($query, $search){
+        $query->when($filters['search'] ?? null, function ($query, $search){
             $query->where('name','REGEXP', $search);
         });
 
@@ -83,7 +83,7 @@ class Classroom extends Model
     public function scopeSorting(Builder $query, array $sorts): void
     {
 
-        $query->when(this: $sorts['field'] ?? null && $ $sorts['direction'] ?? null, value: function ($query) use ($sorts){
+        $query->when($sorts['field'] ?? null && $ $sorts['direction'] ?? null, function ($query) use ($sorts){
             $query->orderBy($sorts['field'], $sorts['direction']);
         });
 

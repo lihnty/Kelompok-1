@@ -1,6 +1,6 @@
 import {AppLayout} from '@/Layouts/AppLayout';
 import HeaderTitle from '@/Components/HeaderTitle';
-import { IconBuildingSkyscraper, IconPlus, IconPencil, IconTrash } from '@tabler/icons-react';
+import { IconPlus, IconPencil, IconTrash } from '@tabler/icons-react';
 import { Link } from '@inertiajs/react';
 import { Button } from '@/Components/ui/button';
 import { Card, CardContent, CardHeader, CardFooter } from '@/Components/ui/card';
@@ -14,6 +14,8 @@ import {Input} from '@/Components/ui/Input';
 import { useState } from 'react';
 import { IconArrowsDownUp, IconDoor, IconRefresh } from '@tabler/icons-react';
 import useFilter from '@/hooks/UseFilter';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/Components/ui/select';
+import ShowFilter from '@/Components/ShowFilter';
 
 export default function Index(props) {
     const {data: classrooms, meta, links}  = props.classrooms;
@@ -62,7 +64,7 @@ export default function Index(props) {
                         <Select value={params?.load} onValueChange={(e) => setParams({...params, load: e})}>
                             <SelectTrigger className="w-full sm:w-24">
                                 <SelectValue placeholder="Load" />
-                            </SelectTrigger>Q
+                            </SelectTrigger>
                             <SelectContent>
                                 {[10,25,50, 75, 100].map((number, index) => (
                                 <SelectItem key={index} value={number}>

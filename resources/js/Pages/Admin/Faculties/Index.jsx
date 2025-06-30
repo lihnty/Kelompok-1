@@ -11,8 +11,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/Components/ui/table';
 import useFilter from '@/hooks/UseFilter';
 import { AppLayout } from '@/Layouts/AppLayout';
-import { formatDateIndo } from '@/lib/utils';
 import { Link } from '@inertiajs/react';
+import { formatDateIndo, deleteAction } from '@/lib/utils';
+
 import {
     IconArrowsDownUp,
     IconBuildingSkyscraper,
