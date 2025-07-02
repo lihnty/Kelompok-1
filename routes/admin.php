@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\CourseController;
 use App\Http\Controllers\Admin\StudentController;
 use App\Http\Controllers\Admin\ClassroomStudentController;
 use App\Http\Controllers\Admin\OperatorController;
+use App\Http\Controllers\Admin\TeacherController;
 
 Route::prefix('admin')->middleware(['auth', 'role:Admin'])->group(function(){
     Route::get('dashboard', DashboardAdminController::class)->name('admin.dashboard');
@@ -77,6 +78,7 @@ Route::prefix('admin')->middleware(['auth', 'role:Admin'])->group(function(){
         Route::get('courses/edit/{course:code}', 'edit')->name('admin.courses.edit');
         Route::put('courses/edit/{course:code}', 'update')->name('admin.courses.update');
         Route::delete('courses/destroy/{course:code}', 'destroy')->name('admin.courses.destroy');
+    });
 
     Route::controller(StudentController::class)->group(function () {
         Route::get('students', 'index')->name('admin.students.index');
@@ -92,7 +94,7 @@ Route::prefix('admin')->middleware(['auth', 'role:Admin'])->group(function(){
         Route::put('classroom/students/{classroom:slug}/sycn', 'sync')->name('admin.classroom-students.sync');
         Route::delete('classroom/students/{classroom:slug}/destroy/{student:student_number}', 'destroy')
             ->name('admin.classroom-students.destroy');
-
+    });
      
     Route::controller(OperatorController::class)->group(function () {
         Route::get('operators', 'index')->name('admin.operators.index');
@@ -101,6 +103,14 @@ Route::prefix('admin')->middleware(['auth', 'role:Admin'])->group(function(){
         Route::get('operators/edit/{operator:employee_number}', 'edit')->name('admin.operators.edit');
         Route::put('operators/edit/{operator:employee_number}', 'update')->name('admin.operators.update');
         Route::delete('operators/destroy/{operator:employee_number}', 'destroy')->name('admin.operators.destroy');
+    });
 
+    Route::controller(TeacherController::class)->group(function () {
+        Route::get('teachers', 'index')->name('admin.teachers.index');
+        Route::get('teachers/create', 'create')->name('admin.teachers.create');
+        Route::post('teachers', 'store')->name('admin.teachers.store');
+        Route::get('teachers/{teacher:teacher_number}/edit', 'edit')->name('admin.teachers.edit');
+        Route::put('teachers/{teacher:teacher_number}', 'update')->name('admin.teachers.update');
+        Route::delete('teachers/{teacher:teacher_number}', 'destroy')->name('admin.teachers.destroy');
     });
 });
