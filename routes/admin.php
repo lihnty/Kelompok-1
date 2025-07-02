@@ -119,4 +119,3 @@ Route::prefix('admin')->middleware(['auth', 'role:Admin'])->group(function(){
         Route::delete('teachers/{teacher:teacher_number}', 'destroy')->name('admin.teachers.destroy');
     });
 });
-});
