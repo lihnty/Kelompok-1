@@ -5,6 +5,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\Admin\FacultyController;
+use App\Http\Controllers\Admin\OperatorController;
 
 Route::get('/', function () {
     if (auth()->check())

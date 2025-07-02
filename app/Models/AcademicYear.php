@@ -5,9 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
+use App\Enums\AcademicYearSemester;
+use Cviebrock\EloquentSluggable\Sluggable;
 
 class AcademicYear extends Model
 {
+    use Sluggable;
     use HasFactory;
 
     protected $fillable = [
@@ -18,6 +21,15 @@ class AcademicYear extends Model
         'semester',
         'is_active',
     ];
+    
+    public function sluggable(): array
+    {
+        return [
+            'slug' => [
+                'source' => 'name',
+            ],
+        ];
+    }
 
     protected function casts(): array
     {
@@ -33,8 +45,11 @@ class AcademicYear extends Model
         });
     }
 
-    public function scopeSorting(Builder $query): void
+    public function scopeSorting(Builder $query, array $sorts): void
     {
-        $query->where('is_active', true);
+        $query->when($sorts['field'] ?? null && $sorts['direction'] ?? null, function ($query) use ($sorts){
+            $query->orderBy($sorts['field'], $sorts['direction']);
+        });
     }
+
 }

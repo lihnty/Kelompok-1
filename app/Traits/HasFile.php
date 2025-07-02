@@ -10,12 +10,14 @@ use Illuminate\Support\Facades\Storage;
 
 trait HasFile
 {
+
     public function upload_file(Request $request, string $column, string $folder): string
     {
         return $request->hasFile($column)
             ? $request->file($column)->store($folder)
             : '';
     }
+
 
     public function update_file(Request $request, Model $model, string $column, string $folder): ?string
     {
