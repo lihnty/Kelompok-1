@@ -9,6 +9,9 @@ use App\Http\Controllers\Admin\FeeGroupController;
 use App\Http\Controllers\Admin\ClassroomController;
 use App\Http\Controllers\Admin\AcademicYearController;
 use App\Http\Controllers\Admin\CourseController;
+use App\Http\Controllers\Admin\StudentController;
+use App\Http\Controllers\Admin\ClassroomStudentController;
+use App\Http\Controllers\Admin\OperatorController;
 
 Route::prefix('admin')->middleware(['auth', 'role:Admin'])->group(function(){
     Route::get('dashboard', DashboardAdminController::class)->name('admin.dashboard');
@@ -74,5 +77,30 @@ Route::prefix('admin')->middleware(['auth', 'role:Admin'])->group(function(){
         Route::get('courses/edit/{course:code}', 'edit')->name('admin.courses.edit');
         Route::put('courses/edit/{course:code}', 'update')->name('admin.courses.update');
         Route::delete('courses/destroy/{course:code}', 'destroy')->name('admin.courses.destroy');
+
+    Route::controller(StudentController::class)->group(function () {
+        Route::get('students', 'index')->name('admin.students.index');
+        Route::get('students/create', 'create')->name('admin.students.create');
+        Route::post('students/create', 'store')->name('admin.students.store');
+        Route::get('students/edit/{student:student_number}', 'edit')->name('admin.students.edit');
+        Route::put('students/edit/{student:student_number}', 'update')->name('admin.students.update');
+        Route::delete('students/destroy/{student}', 'destroy')->name('admin.students.destroy');
+    });
+
+    Route::controller(ClassroomStudentController::class)->group(function () {
+        Route::get('classroom/students/{classroom:slug}', 'index')->name('admin.classroom-students.index');
+        Route::put('classroom/students/{classroom:slug}/sycn', 'sync')->name('admin.classroom-students.sync');
+        Route::delete('classroom/students/{classroom:slug}/destroy/{student:student_number}', 'destroy')
+            ->name('admin.classroom-students.destroy');
+
+     
+    Route::controller(OperatorController::class)->group(function () {
+        Route::get('operators', 'index')->name('admin.operators.index');
+        Route::get('operators/create', 'create')->name('admin.operators.create');
+        Route::post('operators/create', 'store')->name('admin.operators.store');
+        Route::get('operators/edit/{operator:employee_number}', 'edit')->name('admin.operators.edit');
+        Route::put('operators/edit/{operator:employee_number}', 'update')->name('admin.operators.update');
+        Route::delete('operators/destroy/{operator:employee_number}', 'destroy')->name('admin.operators.destroy');
+
     });
 });
