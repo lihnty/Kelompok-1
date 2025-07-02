@@ -1,5 +1,5 @@
 import HeaderTitle from '@/Components/HeaderTitle';
-import { Input } from '@/Components/ui/input';
+import {Input} from '@/Components/ui/input';
 import InputError from '@/Components/InputError';
 import { Button } from '@/Components/ui/button';
 import { Card, CardContent } from '@/Components/ui/card';
@@ -10,6 +10,8 @@ import { flashMessage } from '@/lib/utils';
 import { Link, useForm } from '@inertiajs/react';
 import { IconArrowLeft, IconCheck, IconDoor } from '@tabler/icons-react';
 import { toast } from 'sonner';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/Components/ui/select";
+
 
 export default function Edit(props) {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -102,17 +104,26 @@ export default function Edit(props) {
                             </div>
                             <div className="col-span-full">
                                 <Label htmlFor="academic_year_id">Tahun Ajaran</Label>
-                                <Input
-                                    type="text"
-                                    id="academic_year_id"
-                                    name="academic_year_id"
-                                    placeholder="Masukkan tahun ajaran"
-                                    value={data.academic_year_id}
-                                    onChange={onHandleChange}
-                                    disabled
-                                />
+                                <Select
+                                    defaultValue={data.academic_year_id}
+                                    onValueChange={(value) => setData('academic_year_id', value)}
+                                >
+                                    <SelectTrigger>
+                                        <SelectValue>
+                                            {props.academic_years.find((year) => year.value == data.academic_year_id)?.label ?? 'Pilih Tahun Ajaran'}
+                                        </SelectValue>
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        {props.academic_years.map((year, index) => (
+                                            <SelectItem key={index} value={year.value}>
+                                                {year.label}
+                                            </SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </Select>
                                 {errors.academic_year_id && <InputError message={errors.academic_year_id} />}
                             </div>
+
 
                             <div className="col-span-full">
                                 <Label htmlFor="name">Nama</Label>
