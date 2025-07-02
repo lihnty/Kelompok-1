@@ -11,12 +11,11 @@ import { Input } from '@/Components/ui/input';
 import { flashMessage } from '@/lib/utils';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/Components/ui/select';
 
-
 export default function Create(props) {
     const { data, setData, post, processing, errors, reset } = useForm({
         faculty_id: null,
         department_id: null,
-        academic_year_id: props.academic_year?.name ?? '',
+        academic_year_id: null,
         name: '',
         _method: props.page_settings.method,
     });
@@ -103,15 +102,23 @@ export default function Create(props) {
                             </div>
                             <div className="col-span-full">
                                 <Label htmlFor="academic_year_id">Tahun Ajaran</Label>
-                                <Input
-                                    type="text"
-                                    id="academic_year_id"
-                                    name="academic_year_id"
-                                    placeholder="Masukkan tahun ajaran"
-                                    value={data.academic_year_id}
-                                    onChange={onHandleChange}
-                                    disabled
-                                />
+                                <Select
+                                    defaultValue={data.academic_year_id}
+                                    onValueChange={(value) => setData('academic_year_id', value)}
+                                >
+                                    <SelectTrigger>
+                                        <SelectValue>
+                                            {props.academic_years.find((year) => year.value == data.academic_year_id)?.label ?? 'Pilih Tahun Ajaran'}
+                                        </SelectValue>
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        {props.academic_years.map((year, index) => (
+                                            <SelectItem key={index} value={year.value}>
+                                                {year.label}
+                                            </SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </Select>
                                 {errors.academic_year_id && <InputError message={errors.academic_year_id} />}
                             </div>
 
@@ -121,11 +128,10 @@ export default function Create(props) {
                                     type="text"
                                     id="name"
                                     name="name"
-                                    placeholder="Masukkan nama fakultas"
+                                    placeholder="Masukkan nama kelas"
                                     value={data.name}
                                     onChange={(e) => setData(e.target.name, e.target.value)}
                                 />
-
                                 {errors.name && <InputError message={errors.name} />}
                             </div>
                         </div>
