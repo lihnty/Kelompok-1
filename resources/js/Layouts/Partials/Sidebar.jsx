@@ -78,7 +78,7 @@ export default function Sidebar({ auth, url }) {
                             icon={IconUsers}
                         />
                         <NavLink
-                            url="#"
+                            url={route('admin.teachers.index')}
                             active={url.startsWith('/admin/teachers')}
                             title="Dosen"
                             icon={IconUsersGroup}
@@ -93,7 +93,7 @@ export default function Sidebar({ auth, url }) {
                             icon={IconBooks}
                         />
                         <NavLink
-                            url="#"
+                            url='#'
                             active={url.startsWith('/admin/schedules')}
                             title="Jadwal"
                             icon={IconCalendar}
@@ -101,7 +101,7 @@ export default function Sidebar({ auth, url }) {
 
                         <div className="px-3 py-2 text-xs font-medium text-white">Pembayaran</div>
                         <NavLink
-                            url="#"
+                            url='#'
                             active={url.startsWith('/admin/fees')}
                             title="Uang Kuliah Tunggal"
                             icon={IconMoneybag}
@@ -163,8 +163,8 @@ export default function Sidebar({ auth, url }) {
                         <div className="px-3 py-2 text-xs font-medium text-white">Akademik</div>{' '}
                         {/* Perbaiki typo "Lainya" */}
                         <NavLink
-                            url="#"
-                            active={url.startsWith('/operators/classesrooms')}
+                            url={route('operators.classrooms.index')}
+                            active={url.startsWith('/operators/classrooms')}
                             title="Kelas"
                             icon={IconDoor}
                         />
