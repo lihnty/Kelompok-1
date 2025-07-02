@@ -1,9 +1,10 @@
 import HeaderTitle from '@/Components/HeaderTitle';
-import Input from '@/Components/Input';
+import { Input } from '@/Components/ui/input';
 import InputError from '@/Components/InputError';
 import { Button } from '@/Components/ui/button';
 import { Card, CardContent } from '@/Components/ui/card';
 import { Label } from '@/Components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/Components/ui/select';
 import AppLayout from '@/Layouts/AppLayout';
 import { flashMessage } from '@/lib/utils';
 import { Link, useForm } from '@inertiajs/react';
@@ -84,13 +85,13 @@ export default function Edit(props) {
                                 >
                                     <SelectTrigger>
                                         <SelectValue>
-                                            {props.departments.find(
+                                            {(props.departments || []).find(
                                                 (department) => department.value == data.department_id,
-                                            )?.label ?? 'Pilih Department Studi'}
+                                            )?.label ?? 'Pilih Program Studi'}
                                         </SelectValue>
                                     </SelectTrigger>
                                     <SelectContent>
-                                        {props.departments.map((department, index) => (
+                                        {(props.departments || []).map((department, index) => (
                                             <SelectItem key={index} value={department.value}>
                                                 {department.label}
                                             </SelectItem>
