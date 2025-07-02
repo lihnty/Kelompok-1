@@ -1,6 +1,6 @@
 import {AppLayout} from '@/Layouts/AppLayout';
 import HeaderTitle from '@/Components/HeaderTitle';
-import { IconPlus, IconPencil, IconTrash } from '@tabler/icons-react';
+import { IconPlus, IconPencil, IconTrash, IconUsersGroup } from '@tabler/icons-react';
 import { Link } from '@inertiajs/react';
 import { Button } from '@/Components/ui/button';
 import { Card, CardContent, CardHeader, CardFooter } from '@/Components/ui/card';
@@ -154,6 +154,11 @@ export default function Index(props) {
                                         <TableCell>{formatDateIndo(classroom.created_at)}</TableCell>
                                         <TableCell>
                                             <div className="flex items-center gap-x-1">
+                                                <Button variant='purple' size='sm' asChild>
+                                                    <Link href={route('admin.classroom-students.index', [classroom])}>
+                                                        <IconUsersGroup className='size-4' />
+                                                    </Link>
+                                                </Button>
                                                 <Button variant='blue' size='sm' asChild>
                                                     <Link href={route('admin.classrooms.edit', [classroom])}>
                                                         <IconPencil className='size-4' />
