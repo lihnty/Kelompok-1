@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreignId( column: 'academic_year_id')->nullable()->constrained()->nullOnDelete();
             $table->string('code')->unique();
             $table->string('name');
-            $table->unsignedInteger( column: 'credits');
+            $table->unsignedInteger( column: 'credit');
             $table->unsignedInteger( column: 'semester');
             $table->timestamps();
         });
