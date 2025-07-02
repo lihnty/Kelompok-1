@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\CourseController;
 use App\Http\Controllers\Admin\StudentController;
 use App\Http\Controllers\Admin\ClassroomStudentController;
 use App\Http\Controllers\Admin\OperatorController;
+use App\Http\Controllers\Admin\FeeController;
 use App\Http\Controllers\Admin\TeacherController;
 
 Route::prefix('admin')->middleware(['auth', 'role:Admin'])->group(function(){
@@ -104,6 +105,10 @@ Route::prefix('admin')->middleware(['auth', 'role:Admin'])->group(function(){
         Route::put('operators/edit/{operator:employee_number}', 'update')->name('admin.operators.update');
         Route::delete('operators/destroy/{operator:employee_number}', 'destroy')->name('admin.operators.destroy');
     });
+
+
+        Route::get('fees', FeeController::class)->name('admin.fees.index');
+
 
     Route::controller(TeacherController::class)->group(function () {
         Route::get('teachers', 'index')->name('admin.teachers.index');
