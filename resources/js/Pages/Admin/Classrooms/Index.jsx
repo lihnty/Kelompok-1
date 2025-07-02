@@ -1,13 +1,12 @@
 import {AppLayout} from '@/Layouts/AppLayout';
 import HeaderTitle from '@/Components/HeaderTitle';
-import { IconPlus, IconPencil, IconTrash } from '@tabler/icons-react';
+import { IconPlus, IconPencil, IconTrash, IconUsersGroup } from '@tabler/icons-react';
 import { Link } from '@inertiajs/react';
 import { Button } from '@/Components/ui/button';
 import { Card, CardContent, CardHeader, CardFooter } from '@/Components/ui/card';
 import EmptyState from '@/Components/EmptyState';
-import { formatDateIndo } from '@/lib/utils';
+import { formatDateIndo, deleteAction } from '@/lib/utils';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/Components/ui/table';
-import { Avatar, AvatarFallback, AvatarImage } from '@/Components/ui/avatar';
 import AlertAction from '@/Components/AlertAction';
 import PaginationTable from '@/Components/PaginationTable';
 import {Input} from '@/Components/ui/Input';
@@ -16,6 +15,10 @@ import { IconArrowsDownUp, IconDoor, IconRefresh } from '@tabler/icons-react';
 import useFilter from '@/hooks/UseFilter';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/Components/ui/select';
 import ShowFilter from '@/Components/ShowFilter';
+import { router } from '@inertiajs/react';
+import { toast } from 'sonner';
+import { deleteAction } from '@/lib/utils';
+
 
 export default function Index(props) {
     const {data: classrooms, meta, links}  = props.classrooms;
@@ -154,6 +157,11 @@ export default function Index(props) {
                                         <TableCell>{formatDateIndo(classroom.created_at)}</TableCell>
                                         <TableCell>
                                             <div className="flex items-center gap-x-1">
+                                                <Button variant='purple' size='sm' asChild>
+                                                    <Link href={route('admin.classroom-students.index', [classroom])}>
+                                                        <IconUsersGroup className='size-4' />
+                                                    </Link>
+                                                </Button>
                                                 <Button variant='blue' size='sm' asChild>
                                                     <Link href={route('admin.classrooms.edit', [classroom])}>
                                                         <IconPencil className='size-4' />
