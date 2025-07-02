@@ -134,7 +134,8 @@ class ClassroomController extends Controller
     public function destroy(Classroom $classroom):RedirectResponse
     {
         try {
-            $classroom->delete(); // ✅
+            $classroom->delete();
+            
             flashMessage(MessageType::DELETED->message('Kelas'));
             return to_route('admin.classrooms.index');
 
