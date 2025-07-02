@@ -78,7 +78,7 @@ export default function Sidebar({ auth, url }) {
                             icon={IconUsers}
                         />
                         <NavLink
-                            url="#"
+                            url={route('admin.teachers.index')}
                             active={url.startsWith('/admin/teachers')}
                             title="Dosen"
                             icon={IconUsersGroup}

@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\FeeGroupController; 
 use App\Http\Controllers\Admin\ClassroomController;
 use App\Http\Controllers\Admin\AcademicYearController;
+use App\Http\Controllers\Admin\TeacherController;
 
 Route::prefix('admin')->middleware(['auth', 'role:Admin'])->group(function(){
     Route::get('dashboard', DashboardAdminController::class)->name('admin.dashboard');
@@ -65,4 +66,13 @@ Route::prefix('admin')->middleware(['auth', 'role:Admin'])->group(function(){
         Route::put('fee-groups/edit/{feeGroup}', 'update')->name('admin.fee-groups.update');
         Route::delete('fee-groups/destroy/{feeGroup}', 'destroy')->name('admin.fee-groups.destroy');
     });
+
+    Route::controller(TeacherController::class)->group(function () {
+        Route::get('teachers', 'index')->name('admin.teachers.index');
+        Route::get('teachers/create', 'create')->name('admin.teachers.create');
+        Route::post('teachers', 'store')->name('admin.teachers.store');
+        Route::get('teachers/{teacher:teacher_number}/edit', 'edit')->name('admin.teachers.edit');
+        Route::put('teachers/{teacher:teacher_number}', 'update')->name('admin.teachers.update');
+        Route::delete('teachers/{teacher:teacher_number}', 'destroy')->name('admin.teachers.destroy');
+});
 });
