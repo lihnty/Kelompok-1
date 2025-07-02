@@ -8,7 +8,7 @@ import AppLayout from '@/Layouts/AppLayout';
 import { flashMessage } from '@/lib/utils';
 import { Link, useForm } from '@inertiajs/react';
 import { IconArrowLeft, IconCheck, IconDoor } from '@tabler/icons-react';
-import { toast } from 'react-hot-toast';
+import { toast } from 'sonner';
 
 export default function Edit(props) {
     const { data, setData, post, processing, errors, reset } = useForm({
