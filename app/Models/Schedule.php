@@ -58,6 +58,6 @@ class Schedule extends Model
 
     public function studyPlans(): BelongsToMany
     {
-        return $thisbelongsToMany(related: StudyPlan::class, table: 'study_plan_schedule')->withTimestamps();
+        return $this->belongsToMany(related: StudyPlan::class, table: 'study_plan_schedule')->withTimestamps();
     }
 }

@@ -106,9 +106,9 @@ Route::prefix('admin')->middleware(['auth', 'role:Admin'])->group(function(){
         Route::delete('operators/destroy/{operator:employee_number}', 'destroy')->name('admin.operators.destroy');
     });
 
-
-        Route::get('fees', FeeController::class)->name('admin.fees.index');
-
+    Route::controller(FeeController::class)->group(function () {
+        Route::get('fees', 'index')->name('admin.fees.index');
+    });
 
     Route::controller(TeacherController::class)->group(function () {
         Route::get('teachers', 'index')->name('admin.teachers.index');
