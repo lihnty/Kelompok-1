@@ -1,19 +1,18 @@
 <?php
 
-namespace App\Http\Requests\Admin;
+namespace App\Http\Requests\Operator;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-
-class TeacherRequest extends FormRequest
+class StudentOperatorRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return auth()->check() && auth()->user()->hasRole('Admin'); //nda atau kenapa error ku tandai saja dlu ini
+        return auth()->check() && auth()->user()->hasRole('Operator');
     }
 
     /**
@@ -34,55 +33,54 @@ class TeacherRequest extends FormRequest
                 'required',
                 'email',
                 'max:255',
-                Rule::unique('users')->ignore($this->teacher?->user),
+                Rule::unique('users')->ignore($this->student?->user),
             ],
-            'password' => Rule::when($this->routeIs('admin.teachers.store'), [
+            'password' => Rule::when($this->routeIs('operators.students.create'), [
                 'required',
                 'min:8',
                 'max:255',
             ]),
-            Rule::when($this->routeIs('admin.teachers.update'), [
+            Rule::when($this->routeIs('operators.students.update'), [
                 'nullable',
                 'min:8',
                 'max:255',
             ]),
-            'faculty_id' => [
-                'required',
-                'exists:faculties,id',
-            ],
-            'department_id' => [
-                'required',
-                'exists:departments,id',
-            ],
-            'teacher_number' => [
+            'student_number' => [
                 'required',
                 'string',
-                'max:10',
+                'max:13',
             ],
-            'academic_title' => [
+            'batch' => [
                 'required',
-                'string',
-                'min:3',
-                'max:255',
+                'integer',
             ],
             'avatar' => [
                 'nullable',
-                'mimes:jpg,jpeg,png,webp',
+                'mimes:png,jpg,jpeg,webp',
+                'max:2048',
+            ],
+            'feeGroup' => [
+                'required',
+                'exists:fee_groups,id',
+            ],
+            'classroom_id' => [
+                'required',
+                'exists:classrooms,id',
             ],
         ];
     }
 
-    public function attributes(): array
+    public function attiributes(): array
     {
         return [
             'name' => 'Nama',
             'email' => 'Email',
             'password' => 'Password',
-            'faculty_id' => 'Fakultas',
-            'department_id' => 'Program Studi',
-            'teacher_number' => 'Nomor Induk Dosen',
-            'academic_title' => 'Jabatan Akademik',
-            'avatar' => 'Avatar',
+            'student_number' => 'Nomor Pokok Mahasiswa',
+            'semester' => 'Semester',
+            'batch' => 'Angkatan',
+            'feeGroup' => 'Golongan UKT',
+            'classroom_id' => 'Kelas',
         ];
     }
 }
