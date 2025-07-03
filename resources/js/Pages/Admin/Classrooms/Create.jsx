@@ -11,12 +11,11 @@ import { Input } from '@/Components/ui/input';
 import { flashMessage } from '@/lib/utils';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/Components/ui/select';
 
-
 export default function Create(props) {
     const { data, setData, post, processing, errors, reset } = useForm({
         faculty_id: null,
         department_id: null,
-        academic_year_id: props.academic_year?.name ?? '',
+        academic_year_id:  props.academic_year.name,
         name: '',
         _method: props.page_settings.method,
     });
@@ -28,10 +27,10 @@ export default function Create(props) {
     const onHandleSubmit = (e) => {
         e.preventDefault();
         post(props.page_settings.action, {
-            preserveScoll: true,
+            preserveScroll: true,
             preserveState: true,
-            onSuccess: (succes) => {
-                const flash = flashMessage(succes);
+            onSuccess: (success) => {
+                const flash = flashMessage(success);
                 if (flash) toast[flash.type](flash.message);
             },
         });
@@ -104,10 +103,9 @@ export default function Create(props) {
                             <div className="col-span-full">
                                 <Label htmlFor="academic_year_id">Tahun Ajaran</Label>
                                 <Input
-                                    type="text"
                                     id="academic_year_id"
                                     name="academic_year_id"
-                                    placeholder="Masukkan tahun ajaran"
+                                    type="text"
                                     value={data.academic_year_id}
                                     onChange={onHandleChange}
                                     disabled
@@ -121,11 +119,10 @@ export default function Create(props) {
                                     type="text"
                                     id="name"
                                     name="name"
-                                    placeholder="Masukkan nama fakultas"
+                                    placeholder="Masukkan nama kelas"
                                     value={data.name}
-                                    onChange={(e) => setData(e.target.name, e.target.value)}
+                                    onChange={onHandleChange}
                                 />
-
                                 {errors.name && <InputError message={errors.name} />}
                             </div>
                         </div>

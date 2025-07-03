@@ -108,3 +108,6 @@ export function AppLayout({ title, children }) {
         </>
     );
 }
+
+
+export default AppLayout;
