@@ -13,8 +13,6 @@ import { toast } from "sonner";
 
 export default function Create(props) {
     const {data, setData, post, processing, errors, reset}= useForm({
-        faculty_id: null,
-        department_id: null,
         teacher_id: null,
         name: '',
         credit: 1,
@@ -57,7 +55,7 @@ export default function Create(props) {
                                     icon={IconBooks}
                                 />
                                 <Button variant='orange' size='xl' className='w-full lg:w-auto' asChild>
-                                    <Link href={route('admin.courses.index')}>
+                                    <Link href={route('operators.courses.index')}>
                                         <IconArrowLeft className="size-4"/>
                                         Kembali
                                     </Link>
@@ -67,48 +65,6 @@ export default function Create(props) {
                 <CardContent className="p-6">
                     <form onSubmit={onHandleSubmit}>
                         <div className="grid grid-cols-1 gap-4 lg:grid-cols-4">
-                            <div className="col-span-full">
-                                <Label htmlFor="faculty_id">Fakultas</Label>
-                                <Select
-                                    defaultValue={data.faculty_id}
-                                    onValueChange={(value) => setData('faculty_id', value)}
-                                >
-                                    <SelectTrigger>
-                                        <SelectValue placeholder="Pilih Fakultas">
-                                            {props.faculties.find((faculty) => faculty.value == data.faculty_id)?.label ?? 'Pilih Fakultas'}
-                                        </SelectValue>
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        {props.faculties.map((faculty, index) => (
-                                            <SelectItem key={index} value={faculty.value}>
-                                                {faculty.label}
-                                            </SelectItem>
-                                        ))}
-                                    </SelectContent>
-                                </Select>
-                                {errors.faculty_id && <InputError message={errors.faculty_id} />}
-                            </div>
-                            <div className="col-span-full">
-                                <Label htmlFor="department_id">Program Studi</Label>
-                                <Select
-                                    defaultValue={data.department_id}
-                                    onValueChange={(value) => setData('department_id', value)}
-                                >
-                                    <SelectTrigger>
-                                        <SelectValue placeholder="Pilih Fakultas">
-                                            {props.departments.find((department) => department.value == data.department_id)?.label ?? 'Pilih Program Studi'}
-                                        </SelectValue>
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        {props.departments.map((department, index) => (
-                                            <SelectItem key={index} value={department.value}>
-                                                {department.label}
-                                            </SelectItem>
-                                        ))}
-                                    </SelectContent>
-                                </Select>
-                                {errors.faculty_id && <InputError message={errors.faculty_id} />}
-                            </div>
                             <div className="col-span-full">
                                 <Label htmlFor="teacher_id">Dosen</Label>
                                 <Select
