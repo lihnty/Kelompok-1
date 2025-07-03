@@ -17,7 +17,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import ShowFilter from '@/Components/ShowFilter';
 import { router } from '@inertiajs/react';
 import { toast } from 'sonner';
-import { deleteAction } from '@/lib/utils';
 
 
 export default function Index(props) {
