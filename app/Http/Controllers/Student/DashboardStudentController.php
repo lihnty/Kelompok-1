@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Student;
 
 use App\Http\Controllers\Controller;
 use App\Models\StudyPlan;
+use App\Enums\StudyPlanStatus;
 use App\Models\Fee;
 use App\Enums\FeeStatus; 
 use Illuminate\Http\Request;
@@ -24,10 +25,10 @@ class DashboardStudentController extends Controller
 
             'count' => [
                 'study_plans_approved' => StudyPlan::query()
-                    ->where('status', StudyPlan::APPROVED->value)
+                    ->where('status', StudyPlanStatus::APPROVED->value)
                     ->count(),
                 'study_plans_reject' => StudyPlan::query() 
-                    ->where('status', StudyPlan::REJECT->value) 
+                    ->where('status', StudyPlanStatus::REJECT->value) 
                     ->count(),
                 'total_payments' => Fee::query()
                     ->where('student_id', auth()->user()->student_id)
