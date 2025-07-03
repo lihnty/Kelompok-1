@@ -80,7 +80,7 @@ class CourseController extends Controller
                 'faculty_id' => $request->faculty_id,   
                 'department_id' => $request->department_id,
                 'teacher_id' => $request->teacher_id,
-                'academic_year_id' => activeAcademicYear()->id,
+                'academic_year_id' => activeAcademicYear()?->id,
                 'code' => str()->random(10),
                 'name' => $request->name,
                 'credit' => $request->credit,

@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\Admin\FacultyController;
 use App\Http\Controllers\Admin\OperatorController;
+use App\Http\Controllers\Admin\ScheduleController;
+
 
 Route::get('/', function () {
     if (auth()->check())

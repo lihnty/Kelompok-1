@@ -93,6 +93,7 @@ export default function Sidebar({ auth, url }) {
                             icon={IconBooks}
                         />
                         <NavLink
+                            url={route('admin.schedules.index')}
                             url='#'
                             active={url.startsWith('/admin/schedules')}
                             title="Jadwal"
