@@ -73,14 +73,14 @@ Route::prefix('admin')->middleware(['auth', 'role:Admin'])->group(function(){
             Route::delete('fee-groups/destroy/{feeGroup}', 'destroy')->name('admin.fee-groups.destroy');
         });
 
-    Route::controller(CourseController::class)->group(function () {
-        Route::get('courses', 'index')->name('admin.courses.index');
-        Route::get('courses/create', 'create')->name('admin.courses.create');
-        Route::post('courses/create', 'store')->name('admin.courses.store');
-        Route::get('courses/edit/{course:code}', 'edit')->name('admin.courses.edit');
-        Route::put('courses/edit/{course:code}', 'update')->name('admin.courses.update');
-        Route::delete('courses/destroy/{course:code}', 'destroy')->name('admin.courses.destroy');
-    });
+        Route::controller(CourseController::class)->group(function () {
+            Route::get('courses', 'index')->name('admin.courses.index');
+            Route::get('courses/create', 'create')->name('admin.courses.create');
+            Route::post('courses/create', 'store')->name('admin.courses.store');
+            Route::get('courses/edit/{course:code}', 'edit')->name('admin.courses.edit');
+            Route::put('courses/edit/{course:code}', 'update')->name('admin.courses.update');
+            Route::delete('courses/destroy/{course:code}', 'destroy')->name('admin.courses.destroy');
+        });
 
         Route::controller(StudentController::class)->group(function () {
             Route::get('students', 'index')->name('admin.students.index');
@@ -163,4 +163,5 @@ Route::prefix('admin')->middleware(['auth', 'role:Admin'])->group(function(){
             Route::put('teachers/{teacher:teacher_number}', 'update')->name('admin.teachers.update');
             Route::delete('teachers/{teacher:teacher_number}', 'destroy')->name('admin.teachers.destroy');
         });
+    });
 });
