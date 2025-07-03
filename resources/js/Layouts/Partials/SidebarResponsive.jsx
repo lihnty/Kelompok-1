@@ -122,7 +122,7 @@ export default function SidebarResponsive({ auth, url }) {
                                 {auth.roles.some((role) => ['Operator'].includes(role)) && (
                                     <>
                                         <NavLink
-                                            url="#"
+                                            url={route('operators.dashboard')}
                                             active={url.startsWith('/opetators/dashboard')}
                                             title="Dashboard"
                                             icon={IconLayout2}
@@ -130,7 +130,7 @@ export default function SidebarResponsive({ auth, url }) {
                                         <div className="px-3 py-2 text-xs font-medium text-white">Pengguna</div>{' '}
                                         {/* Perbaiki typo "Lainya" */}
                                         <NavLink
-                                            url="#"
+                                            url={route('operators.students.index')}
                                             active={url.startsWith('/operators/students')}
                                             title="Mahasiswa"
                                             icon={IconUsers}
