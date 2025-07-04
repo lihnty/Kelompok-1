@@ -3,21 +3,16 @@
 namespace App\Enums;
 
 enum StudyPlanStatus: string
-
 {
+    case PENDING = 'pending';
+    case APPROVED = 'approved';
+    case REJECTED = 'rejected';
 
-    case PENDING = 'Pending';
-
-    case APPROVED = 'Approve';
-
-    case REJECT = 'Reject';
-
-        public static function options(): array
+    public static function options(): array
     {
         return collect(self::cases())->map(fn($item) => [
             'value' => $item->value,
-            'label' => $item->value,
+            'label' => ucfirst($item->value), // Format tampilan lebih baik
         ])->values()->toArray();
     }
-
 }

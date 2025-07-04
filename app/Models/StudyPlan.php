@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\StudyPlanStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -28,16 +29,17 @@ class StudyPlan extends Model
 
     public function student(): BelongsTo
     {
-        return $this->belongsTo( relate: Student::class);
+        return $this->belongsTo(Student::class);
     }
 
     public function academicYear(): BelongsTo
     {
-        return $this->belongsTo( relate: AcademicYear::class);
+        return $this->belongsTo(AcademicYear::class);
     }
 
-    public function schedulse(): BelongsToMany
+    public function schedules(): BelongsToMany
     {
-        return $this->belongsToMany( relate: Schedule::class, table: 'study_plan_schedule')->withTimestamps();
+        return $this->belongsToMany(Schedule::class, table: 'study_plan_schedule')->withTimestamps();
     }
 }
+
