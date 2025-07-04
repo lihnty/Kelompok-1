@@ -93,6 +93,7 @@ export default function Sidebar({ auth, url }) {
                             icon={IconBooks}
                         />
                         <NavLink
+                            url={route('admin.schedules.index')}
                             url='#'
                             active={url.startsWith('/admin/schedules')}
                             title="Jadwal"
@@ -141,7 +142,7 @@ export default function Sidebar({ auth, url }) {
                 {auth.roles.some((role) => ['Operator'].includes(role)) && (
                     <>
                         <NavLink
-                            url="#"
+                            url={route('operators.dashboard')}
                             active={url.startsWith('/operators/dashboard')}
                             title="Dashboard"
                             icon={IconLayout2}
@@ -149,13 +150,13 @@ export default function Sidebar({ auth, url }) {
                         <div className="px-3 py-2 text-xs font-medium text-white">Pengguna</div>{' '}
                         {/* Perbaiki typo "Lainya" */}
                         <NavLink
-                            url="#"
+                            url={route('operators.students.index')}
                             active={url.startsWith('/operators/students')}
                             title="Mahasiswa"
                             icon={IconUsers}
                         />
                         <NavLink
-                            url="#"
+                            url={route('operators.teachers.index')}
                             active={url.startsWith('/operators/teachers')}
                             title="Dosen"
                             icon={IconUsersGroup}
@@ -169,7 +170,7 @@ export default function Sidebar({ auth, url }) {
                             icon={IconDoor}
                         />
                         <NavLink
-                            url="#"
+                            url={route('operators.courses.index')}
                             active={url.startsWith('/operators/courses')}
                             title="Mata Kuliah"
                             icon={IconBooks}

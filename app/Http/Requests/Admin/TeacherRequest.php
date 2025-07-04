@@ -86,4 +86,3 @@ class TeacherRequest extends FormRequest
         ];
     }
 }
-

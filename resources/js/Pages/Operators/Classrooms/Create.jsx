@@ -57,14 +57,25 @@ export default function Create(props) {
                         <div className="grid grid-cols-1 gap-4 lg:grid-cols-4">
                             <div className="col-span-full">
                                 <Label htmlFor="academic_year_id">Tahun Ajaran</Label>
-                                <Input
-                                    id="academic_year_id"
-                                    name="academic_year_id"
-                                    type="text"
-                                    value={data.academic_year_id}
-                                    onChange={onHandleChange}
-                                    disabled
-                                />
+                                <Select
+                                    defaultValue={data.academic_year_id}
+                                    onValueChange={(value) => setData('academic_year_id', value)}
+                                >
+                                    <SelectTrigger>
+                                        <SelectValue>
+                                            {props.academic_years.find(
+                                                (academic_year) => academic_year.value == data.academic_year_id,
+                                            )?.label ?? 'Pilih Tahun Ajaran'}
+                                        </SelectValue>
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        {props.academic_years.map((academic_year, index) => (
+                                            <SelectItem key={index} value={academic_year.value}>
+                                                {academic_year.label}
+                                            </SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </Select>
                                 {errors.academic_year_id && <InputError message={errors.academic_year_id} />}
                             </div>
 

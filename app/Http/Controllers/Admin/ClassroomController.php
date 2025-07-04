@@ -76,7 +76,7 @@ class ClassroomController extends Controller
 
             flashMessage(MessageType::CREATED->message('Kelas'));
             return to_route('admin.classrooms.index');
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             flashMessage(MessageType::ERROR->message($e->getMessage()), 'error');
             return to_route('admin.classrooms.index');
         }
@@ -116,7 +116,7 @@ class ClassroomController extends Controller
 
             flashMessage(MessageType::UPDATED->message('Kelas'));
             return to_route('admin.classrooms.index');
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             flashMessage(MessageType::ERROR->message($e->getMessage()), 'error');
             return to_route('admin.classrooms.index');
         }
@@ -128,7 +128,7 @@ class ClassroomController extends Controller
             $classroom->delete();
             flashMessage(MessageType::DELETED->message('Kelas'));
             return to_route('admin.classrooms.index');
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             flashMessage(MessageType::ERROR->message($e->getMessage()), 'error');
             return to_route('admin.classrooms.index');
         }
