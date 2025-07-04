@@ -107,13 +107,13 @@ export default function SidebarResponsive({ auth, url }) {
                                         {/* Perbaiki typo "Lainya" */}
                                         <NavLink
                                             url="#"
-                                            active={url.startsWith('/teachers/cources')}
+                                            active={url.startsWith('/teachers/courses')}
                                             title="Mata Kuliah"
                                             icon={IconBooks}
                                         />
                                         <NavLink
-                                            url="#"
-                                            active={url.startsWith('/teachers/schedules')}
+                                            url={route('operators.schedules.index')}
+                                            active={url.startsWith('/operators/schedules')}
                                             title="Jadwal"
                                             icon={IconCalendar}
                                         />

@@ -4,6 +4,7 @@ use App\Http\Controllers\Operator\DashboardOperatorController;
 use App\Http\Controllers\Operator\TeacherOperatorController;
 use App\Http\Controllers\Operator\StudentOperatorController;
 use App\Http\Controllers\Operator\ClassroomOperatorController;
+use App\Http\Controllers\Operator\ScheduleOperatorController;
 use App\Http\Controllers\Operator\CourseOperatorController;
 
 Route::prefix('operators')->middleware(['auth', 'role:Operator'])->group(function () {
@@ -20,9 +21,6 @@ Route::prefix('operators')->middleware(['auth', 'role:Operator'])->group(functio
     Route::delete('teachers/{teacher}', 'destroy')->name('operators.teachers.destroy');
   });
 
-
-Route::prefix('operators')->middleware(['auth', 'role:Operator'])->group(function(){
-   Route::get('dashboard', DashboardOperatorController::class)->name('operators.dashboard');
 
    Route::controller(StudentOperatorController::class)->group(function () {
        Route::get('students', 'index')->name('operators.students.index');
@@ -41,6 +39,23 @@ Route::prefix('operators')->middleware(['auth', 'role:Operator'])->group(functio
       Route::put('classrooms/edit/{classroom:slug}', 'update')->name('operators.classrooms.update');
       Route::delete('classrooms/destroy/{classroom:slug}', 'destroy')->name('operators.classrooms.destroy');
   });
+
+
+  Route::controller(ScheduleOperatorController::class)->group(function () {
+
+    Route::get('schedules', 'index')->name('operators.schedules.index');
+
+    Route::get('schedules/create', 'create')->name('operators.schedules.create');
+
+    Route::post('schedules/create', 'store')->name('operators.schedules.store');
+
+    Route::get('schedules/edit/{schedule}', 'edit')->name('operators.schedules.edit');
+
+    Route::put('schedules/edit/{schedule}', 'update')->name('operators.schedules.update');
+
+    Route::delete('schedules/destroy/{schedule}', 'destroy')->name('operators.schedules.destroy');
+
+   });
 
   Route::controller(CourseOperatorController::class)->group(function () {
       Route::get('courses', 'index')->name('operators.courses.index');
