@@ -29,17 +29,17 @@ class StudyPlan extends Model
 
     public function student(): BelongsTo
     {
-        return $this->belongsTo( relate: Student::class);
+        return $this->belongsTo(Student::class);
     }
 
     public function academicYear(): BelongsTo
     {
-        return $this->belongsTo( relate: AcademicYear::class);
+        return $this->belongsTo(AcademicYear::class);
     }
 
     public function schedulse(): BelongsToMany
     {
-        return $this->belongsToMany( relate: Schedule::class, table: 'study_plan_schedule')->withTimestamps();
+        return $this->belongsToMany(Schedule::class, 'study_plan_schedule')->withTimestamps();
     }
 
      public function scopeApproved(Builder $query)

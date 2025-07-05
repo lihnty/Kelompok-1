@@ -21,9 +21,6 @@ Route::prefix('operators')->middleware(['auth', 'role:Operator'])->group(functio
   });
 
 
-Route::prefix('operators')->middleware(['auth', 'role:Operator'])->group(function(){
-   Route::get('dashboard', DashboardOperatorController::class)->name('operators.dashboard');
-
    Route::controller(StudentOperatorController::class)->group(function () {
        Route::get('students', 'index')->name('operators.students.index');
        Route::get('students/create', 'create')->name('operators.students.create');

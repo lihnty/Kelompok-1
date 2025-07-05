@@ -119,15 +119,6 @@ Route::prefix('admin')->middleware(['auth', 'role:Admin'])->group(function(){
         Route::put('schedules/{schedule}', 'update')->name('admin.schedules.update');
         Route::delete('schedules/{schedule}', 'destroy')->name('admin.schedules.destroy');
     });
-
-    Route::controller(TeacherController::class)->group(function () {
-        Route::get('teachers', 'index')->name('admin.teachers.index');
-        Route::get('teachers/create', 'create')->name('admin.teachers.create');
-        Route::post('teachers', 'store')->name('admin.teachers.store');
-        Route::get('teachers/{teacher:teacher_number}/edit', 'edit')->name('admin.teachers.edit');
-        Route::put('teachers/{teacher:teacher_number}', 'update')->name('admin.teachers.update');
-        Route::delete('teachers/{teacher:teacher_number}', 'destroy')->name('admin.teachers.destroy');
-     });
         
         Route::controller(OperatorController::class)->group(function () {
             Route::get('operators', 'index')->name('admin.operators.index');
@@ -145,23 +136,5 @@ Route::prefix('admin')->middleware(['auth', 'role:Admin'])->group(function(){
             Route::delete('classroom/students/{classroom:slug}/destroy/{student:student_number}', 'destroy')
                 ->name('admin.classroom-students.destroy');
         });
-
-        Route::controller(OperatorController::class)->group(function () {
-            Route::get('operators', 'index')->name('admin.operators.index');
-            Route::get('operators/create', 'create')->name('admin.operators.create');
-            Route::post('operators/create', 'store')->name('admin.operators.store');
-            Route::get('operators/edit/{operator:employee_number}', 'edit')->name('admin.operators.edit');
-            Route::put('operators/edit/{operator:employee_number}', 'update')->name('admin.operators.update');
-            Route::delete('operators/destroy/{operator:employee_number}', 'destroy')->name('admin.operators.destroy');
-        });
-
-        Route::controller(TeacherController::class)->group(function () {
-            Route::get('teachers', 'index')->name('admin.teachers.index');
-            Route::get('teachers/create', 'create')->name('admin.teachers.create');
-            Route::post('teachers', 'store')->name('admin.teachers.store');
-            Route::get('teachers/{teacher:teacher_number}/edit', 'edit')->name('admin.teachers.edit');
-            Route::put('teachers/{teacher:teacher_number}', 'update')->name('admin.teachers.update');
-            Route::delete('teachers/{teacher:teacher_number}', 'destroy')->name('admin.teachers.destroy');
-        });
-    });
 });
+

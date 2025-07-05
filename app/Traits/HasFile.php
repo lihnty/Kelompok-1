@@ -16,23 +16,6 @@ trait HasFile
             : ''; // Mengembalikan string kosong sebagai default
     }
 
-    public function update_file(Request $request, Model $model, string $column, string $folder): string
-        return $request->hasFile($column)
-            ? $request->file($column)->store($folder)
-            : '';
-    }
-
-
-    public function update_file(Request $request, Model $model, string $column, string $folder): ?string
-    {
-        if ($request->hasFile($column)) {
-            $this->delete_file($model, $column);
-            return $request->file($column)->store($folder);
-        }
-
-        return $model->$column ?? ''; // Pastikan selalu return string
-    }
-
     public function delete_file(Model $model, string $column): void
     {
         if ($model->$column && Storage::exists($model->$column)) {
