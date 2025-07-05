@@ -21,20 +21,23 @@ class StudentOperatorResource extends JsonResource
             'semester' => $this->semester,
             'batch' => $this->batch,
             'created_at' => $this->created_at,
+
             'user' => $this->whenLoaded('user', [
                 'id' => $this->user?->id,
                 'name' => $this->user?->name,
                 'email' => $this->user?->email,
-                'avatar' => $this->user?->avatar ? Storage::url($this->user?->avatar) : null,
+                'avatar' => $this->user?->avatar ? Storage::url($this->user->avatar) : null,
             ]),
+
             'feeGroup' => $this->whenLoaded('feeGroup', [
-                'id' => $this->feeGroup?->id,
-                'group' => $this->feeGroup?->group,
+                'value' => $this->feeGroup?->id,
+                'label' => $this->feeGroup?->group,
             ]),
+
             'classroom' => $this->whenLoaded('classroom', [
-                'id' => $this->classroom?->id,
-                'name' => $this->classroom?->name,
-            ])
+                'value' => $this->classroom?->id,
+                'label' => $this->classroom?->name,
+            ]),
         ];
     }
 }

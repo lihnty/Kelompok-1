@@ -118,15 +118,17 @@ Route::prefix('admin')->middleware(['auth', 'role:Admin'])->group(function(){
         Route::get('schedules/{schedule}/edit', 'edit')->name('admin.schedules.edit');
         Route::put('schedules/{schedule}', 'update')->name('admin.schedules.update');
         Route::delete('schedules/{schedule}', 'destroy')->name('admin.schedules.destroy');
+   
     });
-        
-        Route::controller(OperatorController::class)->group(function () {
-            Route::get('operators', 'index')->name('admin.operators.index');
-            Route::get('operators/create', 'create')->name('admin.operators.create');
-            Route::post('operators/create', 'store')->name('admin.operators.store');
-            Route::get('operators/edit/{operator:employee_number}', 'edit')->name('admin.operators.edit');
-            Route::put('operators/edit/{operator:employee_number}', 'update')->name('admin.operators.update');
-            Route::delete('operators/destroy/{operator:employee_number}', 'destroy')->name('admin.operators.destroy');
 
-        });
+        
+     Route::controller(OperatorController::class)->group(function () {
+         Route::get('operators', 'index')->name('admin.operators.index');
+         Route::get('operators/create', 'create')->name('admin.operators.create');
+         Route::post('operators/create', 'store')->name('admin.operators.store');
+         Route::get('operators/edit/{operator:employee_number}', 'edit')->name('admin.operators.edit');
+         Route::put('operators/edit/{operator:employee_number}', 'update')->name('admin.operators.update');
+         Route::delete('operators/destroy/{operator:employee_number}', 'destroy')->name('admin.operators.destroy');
+
+     });
 });

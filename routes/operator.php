@@ -6,6 +6,8 @@ use App\Http\Controllers\Operator\StudentOperatorController;
 use App\Http\Controllers\Operator\ClassroomOperatorController;
 use App\Http\Controllers\Operator\ScheduleOperatorController;
 use App\Http\Controllers\Operator\CourseOperatorController;
+use App\Http\Controllers\Operator\StudyPlanOperatorController;
+
 
 Route::prefix('operators')->middleware(['auth', 'role:Operator'])->group(function () {
     Route::get('dashboard', DashboardOperatorController::class)->name('operators.dashboard');
@@ -55,4 +57,10 @@ Route::prefix('operators')->middleware(['auth', 'role:Operator'])->group(functio
       Route::put('courses/edit/{course:code}', 'update')->name('operators.courses.update');
       Route::delete('courses/destroy/{course:code}', 'destroy')->name('operators.courses.destroy');
   });
+
+    Route::controller(StudyPlanOperatorController::class)->group(function () {
+        Route::get('students/{student:student_number}/study-plans', 'index')->name('operators.study-plans.index');
+        Route::get('students/{student:student_number}/study-plans/{studyPlan}/approve', 'approve')->name('operators.study-plans.approve');
+    });
+
 });
