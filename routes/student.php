@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Student\DashboardStudentController;
 use App\Http\Controllers\Student\StudyPlanStudentController;
 use App\Http\Controllers\Student\ScheduleStudentController;
+use App\Http\Controllers\Student\FeeStudentController;
 
 Route::prefix('students')->middleware(['auth', 'role:Student'])->group(function(){
     Route::get('dashboard', DashboardStudentController::class)->name('students.dashboard');
@@ -16,4 +17,5 @@ Route::prefix('students')->middleware(['auth', 'role:Student'])->group(function(
     });
 
     Route::get('schedules', ScheduleStudentController::class)->name('students.schedules.index');
+    Route::get('fees', FeeStudentController::class)->name('students.fees.index');
 });

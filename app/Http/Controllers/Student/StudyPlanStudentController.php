@@ -31,7 +31,6 @@ class StudyPlanStudentController extends Controller
             ->paginate(request()->load ?? 10);
 
 
-            return Inertia::render('Students/StudyPlans/Index', [
             return Inertia  ('Students/StudyPlans/Index', [
             'page_settings' => [
                 'title' => 'Kartu Rencana Studi',
