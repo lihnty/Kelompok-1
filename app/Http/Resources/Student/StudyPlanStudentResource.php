@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Resources\Operator;
+namespace App\Http\Resources\Student;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ClassroomOperatorResource extends JsonResource
+class StudyPlanStudentResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,13 +16,12 @@ class ClassroomOperatorResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->name,
-            'slug' => $this->slug,
+            'status' => $this->status,
             'created_at' => $this->created_at,
             'academicYear' => $this->whenLoaded('academicYear', [
                 'id' => $this->academicYear?->id,
                 'name' => $this->academicYear?->name,
-            ])
+            ]),
         ];
     }
 }

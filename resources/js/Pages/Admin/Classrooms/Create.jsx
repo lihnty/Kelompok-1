@@ -102,16 +102,28 @@ export default function Create(props) {
                             </div>
                             <div className="col-span-full">
                                 <Label htmlFor="academic_year_id">Tahun Ajaran</Label>
-                                <Input
-                                    id="academic_year_id"
-                                    name="academic_year_id"
-                                    type="text"
-                                    value={data.academic_year_id}
-                                    onChange={onHandleChange}
-                                    disabled
-                                />
+                                <Select
+                                    defaultValue={data.academic_year_id}
+                                    onValueChange={(value) => setData('academic_year_id', value)}
+                                >
+                                    <SelectTrigger>
+                                        <SelectValue>
+                                            {props.academic_years.find(
+                                                (year) => year.value == data.academic_year_id
+                                            )?.label ?? 'Pilih Tahun Ajaran'}
+                                        </SelectValue>
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        {props.academic_years.map((year, index) => (
+                                            <SelectItem key={index} value={year.value}>
+                                                {year.label}
+                                            </SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </Select>
                                 {errors.academic_year_id && <InputError message={errors.academic_year_id} />}
                             </div>
+
 
                             <div className="col-span-full">
                                 <Label htmlFor="name">Nama</Label>

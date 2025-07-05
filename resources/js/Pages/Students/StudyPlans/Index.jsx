@@ -1,0 +1,173 @@
+import StudentLayout from '@/Layouts/StudentLayout';
+import HeaderTitle from '@/Components/HeaderTitle';
+import { IconPlus, IconPencil, IconTrash, IconBuilding, IconEye } from '@tabler/icons-react';
+import { Link } from '@inertiajs/react';
+import { Button } from '@/Components/ui/button';
+import { Card, CardContent, CardHeader, CardFooter } from '@/Components/ui/card';
+import EmptyState from '@/Components/EmptyState';
+import { formatDateIndo, deleteAction } from '@/lib/utils';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/Components/ui/table';
+import AlertAction from '@/Components/AlertAction';
+import PaginationTable from '@/Components/PaginationTable';
+import {Input} from '@/Components/ui/Input';
+import { useState } from 'react';
+import { IconArrowsDownUp, IconDoor, IconRefresh } from '@tabler/icons-react';
+import useFilter from '@/hooks/UseFilter';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/Components/ui/select';
+import ShowFilter from '@/Components/ShowFilter';
+import { Badge } from '@/Components/ui/badge';
+import { STUDYPLANSTATUSVARIANT } from '@/lib/utils';
+
+
+export default function Index(props) {
+    const {data: studyPlans, meta, links}  = props.studyPlans;
+    const [params, setParams] = useState(props.state);
+
+    const onSortable = (field) => {
+        setParams({
+            ...params,
+            field: field,
+            direction: params.direction === 'asc' ? 'desc' :'asc',
+        });
+    };
+
+    useFilter({
+        route: route('students.study-plans.index'),
+        params: params,
+        only: ['studyPlans'],
+    });
+
+    return (
+        <div className="flex-full flex-col pb-32">
+            <div className="mb-8 flex flex-col items-center justify-between gap-y-4 lg:flex-row lg:items-center">
+                <HeaderTitle
+                    title={props.page_settings.title}
+                    subtitle={props.page_settings.subtitle}
+                    icon={IconBuilding}
+                />
+                <Button variant='orange' size='xl' className='w-full lg:w-auto' asChild>
+                    <Link href={route('students.study-plans.create')}>
+                        <IconPlus className="size-4"/>
+                        Tambah
+                    </Link>
+                </Button>
+            </div>
+
+            <div className="flex flex-col gap-y-8">
+                    <div className="flex flex-col w-full gap-4 lg:flex-row lg:items-center">
+                        <Input
+                            className="w-full sm:w-1/4" 
+                            value={params?.search}
+                            placeholder="Search..."
+                            onChange={(e) => setParams((prev) => ({...prev, search: e.target.value}))}
+                        />
+                        <Select value={params?.load} onValueChange={(e) => setParams({...params, load: e})}>
+                            <SelectTrigger className="w-full sm:w-24">
+                                <SelectValue placeholder="Load" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                {[10,25,50, 75, 100].map((number, index) => (
+                                <SelectItem key={index} value={number}>
+                                    {number}
+                                </SelectItem>
+                                ))}
+                            </SelectContent>
+                        </Select>
+                        <Button variant='red' onClick={() => setParams(props.state)} size='xl'>
+                            <IconRefresh className="size-4" />
+                            Bersihkan
+                        </Button>
+                    </div>
+
+                    <ShowFilter params={params} />
+                    { studyPlans.length === 0 ? (
+                        <EmptyState
+                            icon={IconBuilding}
+                            title="Tidak ada kartu rencana studi"
+                            subtitle="Mulai denagn membuat kartu rencana studi baru"
+                        />
+                    ) : (
+                        <Table className='w-full'> 
+                            <TableHeader>
+                                <TableRow>
+                                    <TableHead>
+                                        <Button variant='ghost' className='inline-flex group' onClick={() => onSortable('id')}>
+                                            #
+                                            <span className='flex-none ml-2 rounded text-muted-foreground'>
+                                                <IconArrowsDownUp className='size-4' />
+                                            </span>
+                                        </Button>
+                                    </TableHead>
+                                    <TableHead>
+                                        <Button variant='ghost' className='inline-flex group' onClick={() => onSortable('academic_year_id')}>
+                                            Tahun Ajaran
+                                            <span className='flex-none ml-2 rounded text-muted-foreground'>
+                                                <IconArrowsDownUp className='size-4' />
+                                            </span>
+                                        </Button>
+                                    </TableHead>
+                                    <TableHead>
+                                        <Button variant='ghost' className='inline-flex group' onClick={() => onSortable('status')}>
+                                            Status
+                                            <span className='flex-none ml-2 rounded text-muted-foreground'>
+                                                <IconArrowsDownUp className='size-4' />
+                                            </span>
+                                        </Button>
+                                    </TableHead>
+                                    <TableHead>
+                                        <Button variant='ghost' className='inline-flex group' onClick={() => onSortable('created_at')}>
+                                            Dibuat Pada
+                                            <span className='flex-none ml-2 rounded text-muted-foreground'>
+                                                <IconArrowsDownUp className='size-4' />
+                                            </span>
+                                        </Button>
+                                    </TableHead>
+                                    <TableHead>Aksi</TableHead>
+                                </TableRow>
+                            </TableHeader>
+                            <TableBody>
+                                {studyPlans.map((studyPlan, index) => (
+                                    <TableRow key={index}>
+                                        <TableCell>{index + 1 + (meta.current_page - 1) * meta.per_page}</TableCell>
+                                        <TableCell>{studyPlan.academicYear.name}</TableCell>
+                                        <TableCell>
+                                            <Badge variant={STUDYPLANSTATUSVARIANT[studyPlan.status]}>{studyPlan.status}</Badge>
+                                        </TableCell>
+                                        <TableCell>{formatDateIndo(studyPlan.created_at)}</TableCell>
+                                        <TableCell>
+                                            <div className="flex items-center gap-x-1">
+                                                <Button variant='blue' size='sm' asChild>
+                                                    <Link href={route('students.study-plans.edit', [studyPlan])}>
+                                                        <IconEye className='size-4' />
+                                                    </Link>
+                                                </Button>
+                                            </div>
+                                        </TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    )}
+                
+                    <div className='flex flex-col items-center justify-between w-full gap-y-2 lg:flex-row'>
+                        <p className='text-sm text-muted-foreground'>
+                            Menampilkan <span className='font-medium text-blue-600'>{meta.from ?? 0}</span> dari{''} {meta.total} Kartu Rencana Studi
+                        </p>
+                        <div className="overflow-x-auto">  
+                            {meta.has_pages && <PaginationTable meta={meta} links={links} />}
+                        </div>
+                    </div>
+            </div>
+
+            <Card>
+                <CardHeader className='mb-4 p-0'>
+
+                </CardHeader>
+                <CardContent className='p-0 [&-td]:whitespace-nowrap [&-td]:px-6 [&-th]:px-6'>
+                </CardContent>
+            </Card>
+        </div>
+    );
+}
+
+Index.layout = (page) => <StudentLayout children={page} title={page.props.page_settings.title}/>

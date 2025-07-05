@@ -21,7 +21,10 @@ if(!function_exists('signatureMidtrans')) {
 if(!function_exists('activeAcademicYear')) {
     function activeAcademicYear()
     {
-        return AcademicYear::query()->where('is_active', true)->first();
+    return AcademicYear::query()
+        ->where('is_active', true)
+        ->first();
+
     }
 }
 
