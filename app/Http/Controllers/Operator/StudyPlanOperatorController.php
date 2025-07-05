@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers\Operator;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Inertia\Inertia;
-use Inertia\Response;
-use App\Models\Student;
+use App\Models\StudyResult;
+use App\Http\Requests\Operator\StudyPlanApproveOperatorRequest;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\DB;
+use Throwable;
+use App\Enums\MessageType;
 use App\Models\StudyPlan;
-use App\Enums\StudyPlanStatus;
-use App\Http\Resources\Operator\StudyPlanOperatorResource;
 
 class StudyPlanOperatorController extends Controller
 {
@@ -41,5 +40,45 @@ class StudyPlanOperatorController extends Controller
             ],
             'statuses' => StudyPlanStatus::options(),
         ]);
+    }
+
+        public function approve(Student $student, StudyPlan $studyPlan, StudyPlanApproveOperatorRequest $request): RedirectResponse
+    {
+        try {
+            DB::beginTransaction();
+
+            $studyPlan->update([
+                'status' => $request->status,
+                'notes' => $request->notes,
+            ]);
+
+            if($studyPlan->status->value === StudyPlanStatus::APPROVED->value) {
+                $studyResult = StudyResult::create([
+                    'student_id' => $studyPlan->student_id,
+                    'academic_year_id' => $studyPlan->academic_year_id,
+                    'semester' => $studyPlan->semester,
+                ]);
+                foreach($studyPlan->schedules->pluck('course_id') as $course) {
+                    $studyResult->grades()->create([
+                        'course_id' => $course,
+                        'letter' => 'E',
+                        'grade' => 0,
+                    ]);
+                }
+            }
+
+            DB::commit();
+
+            match($studyPlan->status->value) {
+                StudyPlanStatus::REJECT->value => flashMessage('Kartu rencana studi mahasiswa berhasil di tolak', 'error'),
+                StudyPlanStatus::APPROVED->value => flashMessage('Kartu rencana studi mahasiswa berhasil diterima'),
+                default => null,
+            };
+           return to_route('operators.study-plans.index', $student);
+        } catch (Throwable $e) {
+            DB::rollback();
+            flashMessage(MessageType::ERROR->message(error: $e->getMessage()), 'error');
+            return to_route('operators.study-plans.index', $student);
+        }
     }
 }

@@ -216,6 +216,14 @@ export default function Index(props) {
                                                     {/* detail */}
                                                     <Detail schedules={studyPlan.schedules} name={studyPlan.student.name} />
                                                     {/* approve */}
+                                                    <Approve
+                                                        name={studyPlan.student.name}
+                                                        statuses={props.statuses}
+                                                        action={route('operators.study-plans.approve', [
+                                                            props.student,
+                                                            studyPlan,
+                                                        ])}
+                                                        />
                                                 </div>
                                             </TableCell>
                                         </TableRow>
