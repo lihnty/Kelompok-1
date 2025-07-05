@@ -8,6 +8,7 @@ use App\Http\Controllers\Operator\ScheduleOperatorController;
 use App\Http\Controllers\Operator\CourseOperatorController;
 use App\Http\Controllers\Operator\StudyPlanOperatorController;
 use App\Http\Controllers\Operator\FeeOperatorController;
+use App\Http\Controllers\Operator\StudyResultOperatorController;
 
 
 Route::prefix('operators')->middleware(['auth', 'role:Operator'])->group(function () {
@@ -66,5 +67,6 @@ Route::prefix('operators')->middleware(['auth', 'role:Operator'])->group(functio
     });
 
     Route::get('students/{student:student_number}/fees', FeeOperatorController::class)->name('operators.fees.index');
+    Route::get('students/{student:student_number}/study-results', StudyResultOperatorController::class)->name('operators.study-results.index');
 
 });
