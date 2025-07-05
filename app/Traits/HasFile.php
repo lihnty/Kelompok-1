@@ -14,7 +14,7 @@ trait HasFile
             ? $request->file($column)->store($folder) 
             : ''; // Mengembalikan string kosong sebagai default
     }
-
+  
     public function update_file(Request $request, Model $model, string $column, string $folder): string
     {
         if ($request->hasFile($column)) {

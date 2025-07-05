@@ -129,6 +129,5 @@ Route::prefix('admin')->middleware(['auth', 'role:Admin'])->group(function(){
          Route::get('operators/edit/{operator:employee_number}', 'edit')->name('admin.operators.edit');
          Route::put('operators/edit/{operator:employee_number}', 'update')->name('admin.operators.update');
          Route::delete('operators/destroy/{operator:employee_number}', 'destroy')->name('admin.operators.destroy');
-
      });
 });
