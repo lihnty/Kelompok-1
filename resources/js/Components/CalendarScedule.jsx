@@ -14,7 +14,7 @@ export default function CalendarSchedule({ days, schedules, student = null}){
     }
 
     const calculateColumnStart = (day) => {
-        const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu']
+        const days = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'];
         return days.indexOf(day) + 1;
     }
 
@@ -24,7 +24,7 @@ export default function CalendarSchedule({ days, schedules, student = null}){
             'bg-gradient-to-b from-orange-500 via-orange-650 to-orange-600', 'bg-gradient-to-b from-yellow-500 via-yellow-650 to-yellow-600', 'bg-gradient-to-b from-emerald-500 via-emerald-650 to-emerald-600',
             'bg-gradient-to-b from-sky-500 via-sky-650 to-sky-600'
         ]
-        return colors[Math.floor(Math.random() * colors.lenght)];
+        return colors[Math.floor(Math.random() * colors.length)];
     }
 
     return (
@@ -41,10 +41,10 @@ export default function CalendarSchedule({ days, schedules, student = null}){
                      <div className="hidden grid-cols-7 -m-px text-sm leading-6 border-r border-gray-100 divide-x divide-gray-100 text-foreground sm:grid">
                             <div className="col-end-1 w-14"/>
                             {days.map((day, index) => (
-                                <div className="flex items-center justify-center py-3">
-                                    <span>{day}</span>
-                                </div>
-                            ))}
+                            <div key={index} className="flex items-center justify-center py-3">
+                                <span>{day}</span>
+                            </div>
+                        ))}
                      </div>
                 </div>
                 <div className="flex flex-auto">
