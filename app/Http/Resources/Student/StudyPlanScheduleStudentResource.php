@@ -4,8 +4,9 @@ namespace App\Http\Resources\Student;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\Admin\ScheduleResource;
 
-class StudyPlanStudentResource extends JsonResource
+class StudyPlanScheduleStudentResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -17,13 +18,13 @@ class StudyPlanStudentResource extends JsonResource
         return [
             'id' => $this->id,
             'status' => $this->status,
+            'notes' => $this->notes,
             'created_at' => $this->created_at,
             'academicYear' => $this->whenLoaded('academicYear', [
                 'id' => $this->academicYear?->id,
                 'name' => $this->academicYear?->name,
-
             ]),
-
+            'schedules' => $this->whenLoaded('schedules', ScheduleResource::collection($this->schedules)),
         ];
     }
 }

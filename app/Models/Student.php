@@ -54,14 +54,14 @@ class Student extends Model
         return $this->hasmany( related: Attendance::class);
     }
 
-    public function grade(): HasMany
+    public function grades(): HasMany
     {
         return $this->hasmany( related: Grade::class);
     }
 
     public function studyPlans(): HasMany
     {
-        return $this->hasmany( related: StudyPlans::class);
+        return $this->hasmany( related: StudyPlan::class);
     }
 
     public function studyResult(): HasMany

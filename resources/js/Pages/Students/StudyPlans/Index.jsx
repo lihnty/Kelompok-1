@@ -31,14 +31,15 @@ export default function Index(props) {
         });
     };
 
-    useFilter({
+    useFilter({  //useFilter nya huruf besar seharus nya
         route: route('students.study-plans.index'),
-        params: params,
+        values: params,
+
         only: ['studyPlans'],
     });
 
     return (
-        <div className="flex-full flex-col pb-32">
+        <div className="flexw-full flex-col pb-32">
             <div className="mb-8 flex flex-col items-center justify-between gap-y-4 lg:flex-row lg:items-center">
                 <HeaderTitle
                     title={props.page_settings.title}
@@ -137,7 +138,7 @@ export default function Index(props) {
                                         <TableCell>
                                             <div className="flex items-center gap-x-1">
                                                 <Button variant='blue' size='sm' asChild>
-                                                    <Link href={route('students.study-plans.edit', [studyPlan])}>
+                                                    <Link href={route('students.study-plans.show', [studyPlan])}>
                                                         <IconEye className='size-4' />
                                                     </Link>
                                                 </Button>
@@ -154,7 +155,7 @@ export default function Index(props) {
                             Menampilkan <span className='font-medium text-blue-600'>{meta.from ?? 0}</span> dari{''} {meta.total} Kartu Rencana Studi
                         </p>
                         <div className="overflow-x-auto">  
-                            {meta.has_pages && <PaginationTable meta={meta} links={links} />}
+                            {meta.hasPages && <PaginationTable meta={meta} links={links} />}
                         </div>
                     </div>
             </div>

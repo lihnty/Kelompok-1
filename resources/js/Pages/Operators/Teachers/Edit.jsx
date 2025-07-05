@@ -8,22 +8,19 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { AppLayout } from '@/Layouts/AppLayout';
 import { flashMessage } from "@/lib/utils";
 import { Link, useForm } from "@inertiajs/react";
-import { IconArrowLeft, IconCheck, IconUsers } from "@tabler/icons-react";
+import { IconArrowLeft, IconCheck, IconSchool, IconUsers, IconUsersGroup } from "@tabler/icons-react";
 import { useRef } from "react";
 import { toast } from "sonner";
 
-export default function Create(props) {
+export default function Edit(props) {
     const fileInputAvatar = useRef(null);
-    const {data, setData, post, processing, errors, reset}= useForm({
-        classroom_id: null,
-        fee_group_id: null,
-        name: '',
-        email: '',
-        password: '',
+    const {data, setData, put, processing, errors, reset}= useForm({
+        name: props.teacher.user.name ?? '',
+        email: props.teacher.user.email ?? '',
+        password:  '',
         avatar: null,
-        student_number: '',
-        semester:  1,
-        batch: '',
+        teacher_number: props.teacher.teacher_number ?? '',
+        academic_title: props.teacher.academic_title ?? '',
         _method: props.page_settings.method,
     })
 
@@ -31,11 +28,11 @@ export default function Create(props) {
 
     const onHandleSubmit = (e) => {
         e.preventDefault();
-        post(props.page_settings.action, {
+        put(props.page_settings.action, {
             preserveScroll: true,
             preserveState: true,
-            onSuccess: (succes) => {
-                const flash = flashMessage(succes);
+            onSuccess: (success) => {
+                const flash = flashMessage(success);
                 if(flash) toast[flash.type](flash.message); 
             }
         });
@@ -52,10 +49,10 @@ export default function Create(props) {
                                 <HeaderTitle
                                     title={props.page_settings.title}
                                     subtitle={props.page_settings.subtitle}
-                                    icon={IconUsers}
+                                    icon={IconUsersGroup}
                                 />
                                 <Button variant='orange' size='xl' className='w-full lg:w-auto' asChild>
-                                    <Link href={route('operators.students.index')}>
+                                    <Link href={route('admin.teachers.index')}>
                                         <IconArrowLeft className="size-4"/>
                                         Kembali
                                     </Link>
@@ -99,77 +96,22 @@ export default function Create(props) {
                                     id="password"
                                     value={data.password}
                                     onChange={onHandleChange}
-                                    placeholder="********"
+                                    placeholder=""
                                     autoComplete="current-password"
                                 />
                                 {errors.password && <InputError message={errors.email} />}
                             </div>
-                             <div className="col-span-full">
-                                <Label htmlFor="classroom_id">Kelas</Label>
-                                <Select
-                                    defaultValue={data.classroom_id}
-                                    onValueChange={(value) => setData('classroom_id', value)}
-                                >
-                                    <SelectTrigger>
-                                        <SelectValue placeholder="Pilih Fakultas">
-                                            {props.classrooms.find((classroom) => classroom.value == data.classroom_id)?.label ?? 'Pilih Kelas'}
-                                        </SelectValue>
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                       {props.classrooms.map((classroom, index) => (
-                                        <SelectItem key={index} value={classroom.value}>
-                                            {classroom.label}
-                                        </SelectItem>
-                                        ))}
-                                    </SelectContent>
-                                </Select>
-                                {errors.classroom_id && <InputError message={errors.classroom_id} />}
-
-                            </div>
-                            <div className="col-span-full">
-                                <Label htmlFor="fee_group_id">Golongan UKT</Label>
-                                <Select
-                                    defaultValue={data.fee_group_id}
-                                    onValueChange={(value) => setData('fee_group_id', value)}
-                                >
-                                    <SelectTrigger>
-                                        <SelectValue placeholder="Pilih Fakultas">
-                                            {props.feeGroups.find((feeGroup) => feeGroup.value == data.fee_group_id)?.label ?? 'Pilih Golongan UKT'}
-                                        </SelectValue>
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        {props.feeGroups.map((feeGroup, index) => (
-                                            <SelectItem key={index} value={feeGroup.value}>
-                                                {feeGroup.label}
-                                            </SelectItem>
-                                        ))}
-                                    </SelectContent>
-                                </Select>
-                                {errors.classroom_id && <InputError message={errors.classroom_id} />}
-                            </div>
                             <div className="col-span-2">
-                                <Label htmlFor="semester">Semester</Label>
-                                <Input
-                                    type="number"
-                                    name="semester"
-                                    id="semester"
-                                    value={data.semester}
-                                    onChange={onHandleChange}
-                                    placeholder="Masukan semester"
-                                />
-                                {errors.semester && <InputError message={errors.semester} />}
-                            </div>
-                            <div className="col-span-2">
-                                <Label htmlFor="batch">Angkatan</Label>
+                                <Label htmlFor="academic_title">Jabatan Akademik</Label>
                                 <Input
                                     type="text"
-                                    name="batch"
-                                    id="batch"
-                                    value={data.batch}
+                                    name="academic_title"
+                                    id="academic_title"
+                                    value={data.academic_title}
                                     onChange={onHandleChange}
-                                    placeholder="Masukan Angkatan"
+                                    placeholder="Masukan jabatan akademik"
                                 />
-                                {errors.batch && <InputError message={errors.batch} />}
+                                {errors.academic_title && <InputError message={errors.batch} />}
                             </div>
                             <div className="col-span-2">
                                 <Label htmlFor="avatar">Avatar</Label>
@@ -183,16 +125,16 @@ export default function Create(props) {
                                 {errors.batch && <InputError message={errors.batch} />}
                             </div>
                              <div className="col-span-2">
-                                <Label htmlFor="student_number">Nomor Pokok Mahasiswa</Label>
+                                <Label htmlFor="teacher_number">Nomor Induk Dosen</Label>
                                 <Input
                                     type="text"
-                                    name="student_number"
-                                    id="student_number"
-                                    value={data.student_number}
+                                    name="teacher_number"
+                                    id="teacher_number"
+                                    value={data.teacher_number}
                                     onChange={onHandleChange}
-                                    placeholder="Masukan Nomor pokok mahasiswa"
+                                    placeholder="Masukan nomor induk dosen"
                                 />
-                                {errors.student_number && <InputError message={errors.student_number} />}
+                                {errors.teacher_number && <InputError message={errors.teacher_number} />}
                             </div>  
                         </div>
 
@@ -212,4 +154,4 @@ export default function Create(props) {
         )
 }
 
-Create.layout = (page) => <AppLayout children={page} title={page.props.page_settings.title}/>
+Edit.layout = (page) => <AppLayout children={page} title={page.props.page_settings.title}/>

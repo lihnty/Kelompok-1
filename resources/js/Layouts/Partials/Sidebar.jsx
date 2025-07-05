@@ -42,7 +42,7 @@ export default function Sidebar({ auth, url }) {
                 {auth.roles.some((role) => ['Admin'].includes(role)) && (
                     <>
                         <NavLink
-                            url="#"
+                            url={route('admin.dashboard')}
                             active={url.startsWith('/admin/dashboard')}
                             title="Dashboard"
                             icon={IconLayout2}
@@ -94,7 +94,6 @@ export default function Sidebar({ auth, url }) {
                         />
                         <NavLink
                             url={route('admin.schedules.index')}
-                            url='#'
                             active={url.startsWith('/admin/schedules')}
                             title="Jadwal"
                             icon={IconCalendar}
@@ -118,7 +117,7 @@ export default function Sidebar({ auth, url }) {
                 {auth.roles.some((role) => ['Teacher'].includes(role)) && (
                     <>
                         <NavLink
-                            url="#"
+                            url={route('teachers.dashboard')}
                             active={url.startsWith('/teachers/dashboard')}
                             title="Dashboard"
                             icon={IconLayout2}
@@ -126,7 +125,7 @@ export default function Sidebar({ auth, url }) {
                         <div className="px-3 py-2 text-xs font-medium text-white">Akademik</div>{' '}
                         {/* Perbaiki typo "Lainya" */}
                         <NavLink
-                            url="#"
+                            url={route('teachers.courses.index')}
                             active={url.startsWith('/teachers/courses')}
                             title="Mata Kuliah"
                             icon={IconBooks}
@@ -156,7 +155,7 @@ export default function Sidebar({ auth, url }) {
                             icon={IconUsers}
                         />
                         <NavLink
-                            url="#"
+                            url={route('operators.teachers.index')}
                             active={url.startsWith('/operators/teachers')}
                             title="Dosen"
                             icon={IconUsersGroup}
@@ -176,7 +175,7 @@ export default function Sidebar({ auth, url }) {
                             icon={IconBooks}
                         />
                         <NavLink
-                            url="#"
+                            url={route('operators.schedules.index')}
                             active={url.startsWith('/operators/schedules')}
                             title="Jadwal"
                             icon={IconCalendar}

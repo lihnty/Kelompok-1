@@ -58,9 +58,9 @@ export default function Create(props) {
                             <div className="col-span-full">
                                 <Label htmlFor="academic_year_id">Tahun Ajaran</Label>
                                 <Input
+                                    type="text"
                                     id="academic_year_id"
                                     name="academic_year_id"
-                                    type="text"
                                     value={data.academic_year_id}
                                     onChange={onHandleChange}
                                     disabled

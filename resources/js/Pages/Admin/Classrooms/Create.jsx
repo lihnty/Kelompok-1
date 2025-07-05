@@ -109,14 +109,14 @@ export default function Create(props) {
                                     <SelectTrigger>
                                         <SelectValue>
                                             {props.academic_years.find(
-                                                (year) => year.value == data.academic_year_id
+                                                (academic_year) => academic_year.value == data.academic_year_id,
                                             )?.label ?? 'Pilih Tahun Ajaran'}
                                         </SelectValue>
                                     </SelectTrigger>
                                     <SelectContent>
-                                        {props.academic_years.map((year, index) => (
-                                            <SelectItem key={index} value={year.value}>
-                                                {year.label}
+                                        {props.academic_years.map((academic_year, index) => (
+                                            <SelectItem key={index} value={academic_year.value}>
+                                                {academic_year.label}
                                             </SelectItem>
                                         ))}
                                     </SelectContent>

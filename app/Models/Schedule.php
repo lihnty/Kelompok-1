@@ -64,7 +64,7 @@ class Schedule extends Model
 
     public function studyPlans(): BelongsToMany
     {
-        return $this->belongsToMany(StudyPlan::class, 'study_plan_schedule')->withTimestamps();
+        return $this->belongsToMany(related: StudyPlan::class, table: 'study_plan_schedule')->withTimestamps();
     }
 
     public function scopeFilter(Builder $query, array $filters): void
