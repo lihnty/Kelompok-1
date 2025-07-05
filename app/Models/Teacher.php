@@ -54,7 +54,7 @@ class Teacher extends Model
             match ($sorts['field']){
                 'faculty_id' => $query->join('faculties', 'teachers.faculty_id', '=', 'faculties.id')
                     ->orderBy('faculties.name', $sorts['direction']),
-                'department_id' => $query->join('departments', 'teachers.department_id', '=', 'departments.id')
+                'department_id' => $query->join('departments', 'teachers.department_id', '=', 'departments_id')
                     ->orderBy('departments.name', $sorts['direction']),
                 'name' => $query->join('users', 'teachers.user_id', '=', 'users.id')
                     ->orderBy('users.name', $sorts['direction']),

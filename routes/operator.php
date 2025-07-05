@@ -21,7 +21,8 @@ Route::prefix('operators')->middleware(['auth', 'role:Operator'])->group(functio
     Route::delete('teachers/{teacher}', 'destroy')->name('operators.teachers.destroy');
   });
 
-    Route::controller(StudentOperatorController::class)->group(function () {
+
+   Route::controller(StudentOperatorController::class)->group(function () {
        Route::get('students', 'index')->name('operators.students.index');
        Route::get('students/create', 'create')->name('operators.students.create');
        Route::post('students/create', 'store')->name('operators.students.store');

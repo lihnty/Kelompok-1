@@ -138,7 +138,7 @@ export default function Index(props) {
                                         <TableCell>
                                             <div className="flex items-center gap-x-1">
                                                 <Button variant='blue' size='sm' asChild>
-                                                    <Link href={route('students.study-plans.show', [studyPlan])}>
+                                                    <Link href={route('students.study-plans.index', [studyPlan])}>
                                                         <IconEye className='size-4' />
                                                     </Link>
                                                 </Button>

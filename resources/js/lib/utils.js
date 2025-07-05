@@ -32,9 +32,11 @@ export const deleteAction = (url, { closeModal, ...options } = {}) => {
     router.delete(url, defaultOptions);
 };
 
-export const formatDateIndo = (dateString) => {
-    return format(parseISO(dateString), 'eeee, dd MMMM yyyy', { locale: id });
-};
+export function formatDateIndo(dateString) {
+  if (!dateString) return '-'; // atau return nilai default lain
+  return format(parseISO(dateString), 'dd MMMM yyyy', { locale: id });
+}
+
 
 export const formatToRupiah = (amount) => {
     const formatter = new Intl.NumberFormat('id-ID', {
