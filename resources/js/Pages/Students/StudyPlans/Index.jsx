@@ -34,6 +34,7 @@ export default function Index(props) {
     useFilter({  //useFilter nya huruf besar seharus nya
         route: route('students.study-plans.index'),
         values: params,
+
         only: ['studyPlans'],
     });
 
@@ -137,7 +138,7 @@ export default function Index(props) {
                                         <TableCell>
                                             <div className="flex items-center gap-x-1">
                                                 <Button variant='blue' size='sm' asChild>
-                                                    <Link href={route('students.study-plans.edit', [studyPlan])}>
+                                                    <Link href={route('students.study-plans.show', [studyPlan])}>
                                                         <IconEye className='size-4' />
                                                     </Link>
                                                 </Button>

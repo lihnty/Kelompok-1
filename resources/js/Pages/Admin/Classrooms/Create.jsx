@@ -124,6 +124,7 @@ export default function Create(props) {
                                 {errors.academic_year_id && <InputError message={errors.academic_year_id} />}
                             </div>
 
+
                             <div className="col-span-full">
                                 <Label htmlFor="name">Nama</Label>
                                 <Input

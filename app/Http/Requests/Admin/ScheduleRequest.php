@@ -77,7 +77,7 @@ class ScheduleRequest extends FormRequest
             'start_time'   => 'Waktu Mulai',
             'end_time'     => 'Waktu Berakhir',
             'day_of_week'  => 'Hari',
-            'quota'        => 'Kuota',
+            'quota'        => 'Kuota',  
         ];
     }
 }

@@ -64,5 +64,4 @@ class Teacher extends Model
             };
         });
     }
-
 }
