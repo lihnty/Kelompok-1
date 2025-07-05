@@ -187,5 +187,126 @@ $schedules = Schedule::query()
 
      }
 
+     public function edit(Schedule $schedule): Response
+
+     {
+
+        return inertia('Operators/Schedules/Edit', [
+
+            'page_settings' => [
+
+                'title' => 'Ubah Jadwal',
+
+                'subtitle' => 'Ubah jadwal disini. Klik simpan setelah selesai',
+
+                'method' => 'PUT',
+
+                'action' => route('operators.schedules.update', $schedule),
+
+            ],
+
+            'schedule' => $schedule,
+
+            'classrooms' => Classroom::query()
+
+                ->select(['id', 'name'])
+
+                ->orderBy('name')
+
+                ->where('faculty_id', auth()->user()->operator->faculty_id)
+                
+                ->where('department_id', auth()->user()->operator->department_id)
+
+                ->get()
+
+                ->map(fn($item) => [
+
+                    'value' => $item->id,
+
+                    'label' => $item->name,
+
+                ]),
+
+                                'courses' => Course::query()
+
+                ->select(['id', 'name'])
+
+                ->orderBy('name')
+
+                ->where('faculty_id', auth()->user()->operator->faculty_id)
+                
+                ->where('department_id', auth()->user()->operator->department_id)
+
+                ->get()
+
+                ->map(fn($item) => [
+
+                    'value' => $item->id,
+
+                    'label' => $item->name,
+
+                ]),
+
+                    'days' => ScheduleDay::options(),
+        ]);
+
+     }
+
+     public function update(ScheduleOperatorRequest $request, Schedule $schedule): RedirectResponse
+
+     {
+
+        try {
+
+                $schedule->update([
+
+                    'course_id' => $request->course_id,
+
+                    'classroom_id' => $request->classroom_id,
+                    'start_time' => $request->start_time,
+
+                    'end_time' => $request->end_time,
+
+                    'day_of_week' => $request->day_of_week,
+
+                    'quota' => $request->quota,
+
+                ]);
+
+                 flashMessage(MessageType::UPDATED->message('Jadwal'));
+
+                 return to_route('operators.schedules.index');
+
+        } catch (Throwable $e) {
+
+            flashMessage(MessageType::Error->message(error: $e->getMessage()), 'error');
+
+            return to_route('operators.schedules.index');
+
+        }
+
+     }
+
+     public function destroy(Schedule $schedule): RedirectResponse
+
+     {
+
+        try {
+
+                $schedule->delete();
+
+                 flashMessage(MessageType::DELETED->message('Jadwal'));
+
+                 return to_route('operators.schedules.index');
+
+        } catch (Throwable $e) {
+
+            flashMessage(MessageType::Error->message(error: $e->getMessage()), 'error');
+
+            return to_route('operators.schedules.index');
+
+        }
+
+     }
 
 }

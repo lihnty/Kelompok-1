@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Builder;
 
 class Attendance extends Model
 {
@@ -31,5 +32,10 @@ class Attendance extends Model
     public function classroom(): BelongsTo
     {
         return $this->belongsTo( related: Classroom::class);
+    }
+
+    public function scopeActive(Builder $query)
+    {
+        $query->where('status', true);
     }
 }

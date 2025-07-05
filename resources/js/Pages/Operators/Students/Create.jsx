@@ -32,7 +32,7 @@ export default function Create(props) {
     const onHandleSubmit = (e) => {
         e.preventDefault();
         post(props.page_settings.action, {
-            preserveScoll: true,
+            preserveScroll: true,
             preserveState: true,
             onSuccess: (succes) => {
                 const flash = flashMessage(succes);
@@ -49,17 +49,17 @@ export default function Create(props) {
         return (
             <div className="flex flex-col w-full pb-32">
              <div className="mb-8 flex flex-col items-center justify-between gap-y-4 lg:flex-row lg:items-center">
-                                <HeaderTitle
-                                    title={props.page_settings.title}
-                                    subtitle={props.page_settings.subtitle}
-                                    icon={IconUsers}
-                                />
-                                <Button variant='orange' size='xl' className='w-full lg:w-auto' asChild>
-                                    <Link href={route('operators.students.index')}>
-                                        <IconArrowLeft className="size-4"/>
-                                        Kembali
-                                    </Link>
-                                </Button>
+                <HeaderTitle
+                    title={props.page_settings.title}
+                    subtitle={props.page_settings.subtitle}
+                    icon={IconUsers}
+                />
+                <Button variant='orange' size='xl' className='w-full lg:w-auto' asChild>
+                    <Link href={route('operators.students.index')}>
+                        <IconArrowLeft className="size-4"/>
+                        Kembali
+                    </Link>
+                </Button>
              </div>
              <Card>
                 <CardContent className="p-6">
@@ -102,7 +102,7 @@ export default function Create(props) {
                                     placeholder="********"
                                     autoComplete="current-password"
                                 />
-                                {errors.password && <InputError message={errors.email} />}
+                                {errors.password && <InputError message={errors.password} />}
                             </div>
                              <div className="col-span-full">
                                 <Label htmlFor="classroom_id">Kelas</Label>
@@ -123,7 +123,7 @@ export default function Create(props) {
                                         ))}
                                     </SelectContent>
                                 </Select>
-                                {errors.faculty_id && <InputError message={errors.faculty_id} />}
+                                {errors.classroom_id && <InputError message={errors.classroom_id} />}
                             </div>
                             <div className="col-span-full">
                                 <Label htmlFor="fee_group_id">Golongan UKT</Label>
@@ -132,7 +132,7 @@ export default function Create(props) {
                                     onValueChange={(value) => setData('fee_group_id', value)}
                                 >
                                     <SelectTrigger>
-                                        <SelectValue placeholder="Pilih Fakultas">
+                                        <SelectValue placeholder="Pilih Golongan UKT">
                                             {props.feeGroups.find((feeGroup) => feeGroup.value == data.fee_group_id)?.label ?? 'Pilih Golongan UKT'}
                                         </SelectValue>
                                     </SelectTrigger>
@@ -144,7 +144,7 @@ export default function Create(props) {
                                         ))}
                                     </SelectContent>
                                 </Select>
-                                {errors.faculty_id && <InputError message={errors.faculty_id} />}
+                                {errors.fee_group_id && <InputError message={errors.fee_group_id} />}
                             </div>
                             <div className="col-span-2">
                                 <Label htmlFor="semester">Semester</Label>
@@ -179,7 +179,7 @@ export default function Create(props) {
                                     onChange={(e) =>setData(e.target.name, e.target.files[0])}
                                     ref={fileInputAvatar}
                                 />
-                                {errors.batch && <InputError message={errors.batch} />}
+                                {errors.avatar && <InputError message={errors.avatar} />}
                             </div>
                              <div className="col-span-2">
                                 <Label htmlFor="student_number">Nomor Pokok Mahasiswa</Label>

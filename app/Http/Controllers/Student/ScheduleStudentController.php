@@ -19,7 +19,7 @@ class ScheduleStudentController extends Controller
         $studyPlan = StudyPlan::query()
         ->where('student_id', auth()->user()->student_id)
         ->where('academic_year', activeAcademicYear()->id)
-        ->approved()
+        // ->approved()
         ->with(['schedulses'])
         ->first();
 

@@ -59,7 +59,7 @@ class StudentOperatorRequest extends FormRequest
                 'mimes:png,jpg,jpeg,webp',
                 'max:2048',
             ],
-            'feeGroup' => [
+            'fee_group_id' => [
                 'required',
                 'exists:fee_groups,id',
             ],
@@ -79,7 +79,7 @@ class StudentOperatorRequest extends FormRequest
             'student_number' => 'Nomor Pokok Mahasiswa',
             'semester' => 'Semester',
             'batch' => 'Angkatan',
-            'feeGroup' => 'Golongan UKT',
+            'fee_group_id' => 'Golongan UKT',
             'classroom_id' => 'Kelas',
         ];
     }
