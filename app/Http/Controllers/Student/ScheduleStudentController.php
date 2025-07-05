@@ -17,10 +17,10 @@ class ScheduleStudentController extends Controller
     public function __invoke(): Response|RedirectResponse
     {
         $studyPlan = StudyPlan::query()
-        ->where('student_id', auth()->user()->student->id)
-        ->where('academic_year_id', activeAcademicYear()->id)
-        ->approved()
-        ->with(['schedules'])
+        ->where('student_id', auth()->user()->student_id)
+        ->where('academic_year', activeAcademicYear()->id)
+        // ->approved()
+        ->with(['schedulses'])
         ->first();
 
         if (!$studyPlan) {

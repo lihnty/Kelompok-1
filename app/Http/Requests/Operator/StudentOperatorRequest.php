@@ -39,10 +39,19 @@ class StudentOperatorRequest extends FormRequest
                 'max:13',
                 Rule::unique('students', 'student_number')->ignore($this->student),
             ],
+            'batch' => [
+                'required',
+                'integer',
+            ],
+            'fee_group_id' => [
+                'required',
+                'exists:fee_groups,id',
+            ],
+            'classroom_id' => [
+                'required',
+                'exists:classrooms,id',
+            ],
             'semester' => ['required', 'integer', 'min:1'],
-            'batch' => ['required', 'integer'],
-            'fee_group_id' => ['required', 'exists:fee_groups,id'],
-            'classroom_id' => ['required', 'exists:classrooms,id'],
         ];
     }
 
