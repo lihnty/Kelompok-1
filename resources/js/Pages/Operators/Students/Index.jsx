@@ -15,6 +15,7 @@ import { Link } from '@inertiajs/react';
 import { formatDateIndo, deleteAction } from '@/lib/utils';
 import {
     IconArrowsDownUp,
+    IconBuilding,
     IconCircleKey,
     IconPencil,
     IconPlus,
@@ -231,6 +232,11 @@ export default function Index(props) {
                                             <TableCell>{formatDateIndo(student.created_at)}</TableCell>
                                             <TableCell>
                                                 <div className="flex items-center gap-x-1">
+                                                    <Button variant="purple" size="sm" asChild>
+                                                        <Link href={route('operators.study-plans.index', [student])}>
+                                                            <IconBuilding className="size-4" />
+                                                        </Link>
+                                                    </Button>
                                                     <Button variant="blue" size="sm" asChild>
                                                         <Link href={route('operators.students.edit', [student])}>
                                                             <IconPencil className="size-4" />

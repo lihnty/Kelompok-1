@@ -6,14 +6,20 @@ import { Link, useForm } from '@inertiajs/react';
 import { TableHeader, Table, TableRow, TableHead, TableBody, TableCell } from '@/Components/ui/table';
 import { Checkbox } from '@/Components/ui/checkbox';
 import { cn } from '@/lib/utils';
+import toast from 'sonner'; 
+import flashMessage from '@/lib/flashMessage'; 
+
 
 export default function Create(props) {
     const { data, setData, post, errors, processing } = useForm({
+      
         schedule_id: [],
         _method: props.page_settings.method,
     });
 
     const onHandleSubmit = (e) => {
+
+
             e.preventDefault();
             post(props.page_settings.action, {
                 preserveScroll: true,
@@ -28,7 +34,6 @@ export default function Create(props) {
     const onHandleReset = () => {
         reset();
     };
-    
 
     return (
         <div className="flex w-full flex-col pb-32">
@@ -45,6 +50,12 @@ export default function Create(props) {
                     </Link>
                 </Button>
             </div>
+
+            {props.schedules.length === 0 ? (
+                <div className='text-center text-muted-foreground py-10'>
+                    <p>Tidak ada jadwal tersedia untuk dibuat KRS.</p>
+                </div>
+            ) : (
             <form onSubmit={onHandleSubmit}>
                 <Table className="w-full">
                     <TableHeader>

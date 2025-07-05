@@ -24,7 +24,7 @@ class ScheduleStudentController extends Controller
         ->first();
 
         if (!$studyPlan) {
-            flashMessage('Anda mengujukan krs', 'warning');
+            flashMessage('Anda belum  mengujukan krs', 'warning');
             return to_route('students.study-plans.index');
         }
 
@@ -33,7 +33,7 @@ class ScheduleStudentController extends Controller
 
         foreach ($studyPlan->schedules as $schedule) {
             $startTime = substr($schedule->start_time, 0, 5);
-            $endTime = substr($schedule->endTime, 0, 5);
+            $endTime = substr($schedule->end_time, 0, 5);
             $day = $schedule->day_of_week->value;
 
             $scheduleTable[$startTime][$day] = [

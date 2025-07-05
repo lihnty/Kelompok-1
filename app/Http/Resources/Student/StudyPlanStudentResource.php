@@ -21,7 +21,9 @@ class StudyPlanStudentResource extends JsonResource
             'academicYear' => $this->whenLoaded('academicYear', [
                 'id' => $this->academicYear?->id,
                 'name' => $this->academicYear?->name,
-            ])
+
+            ]),
+
         ];
     }
 }

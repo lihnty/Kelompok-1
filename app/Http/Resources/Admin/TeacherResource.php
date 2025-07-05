@@ -34,9 +34,6 @@ class TeacherResource extends JsonResource
                 'id' => $this->department?->id,
                 'name' => $this->department?->name,
             ]),
-            'user' => $this->whenLoaded('user', ['id' => $this->user?->id,'name' => $this->user?->name,'email' => $this->user?->email,'avatar' => $this->user?->avatar ? Storage::url($this->user?->avatar) : null,]),
-            'faculty' => $this->whenLoaded('faculty', ['id' => $this->faculty?->id,'name' => $this->faculty?->name,]),
-            'department' => $this->whenLoaded('department', ['id' => $this->department?->id,'name' => $this->department?->name,]),
         ];
     }
 }
