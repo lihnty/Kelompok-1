@@ -34,6 +34,7 @@ export default function Index(props) {
     useFilter({  //useFilter nya huruf besar seharus nya
         route: route('students.study-plans.index'),
         values: params,
+
         only: ['studyPlans'],
     });
 

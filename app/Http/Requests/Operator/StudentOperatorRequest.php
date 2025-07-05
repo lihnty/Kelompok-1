@@ -7,79 +7,56 @@ use Illuminate\Validation\Rule;
 
 class StudentOperatorRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
     public function authorize(): bool
     {
         return auth()->check() && auth()->user()->hasRole('Operator');
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
-     */
     public function rules(): array
     {
         return [
-            'name' => [
-                'required',
-                'string',
-                'min:3',
-                'max:255',
-            ],
+            'name' => ['required', 'string', 'min:3', 'max:255'],
             'email' => [
                 'required',
                 'email',
                 'max:255',
-                Rule::unique('users')->ignore($this->student?->user),
+                Rule::unique('users', 'email')->ignore(optional($this->student)->user),
             ],
-            'password' => Rule::when($this->routeIs('operators.students.create'), [
-                'required',
-                'min:8',
-                'max:255',
-            ]),
-            Rule::when($this->routeIs('operators.students.update'), [
-                'nullable',
-                'min:8',
-                'max:255',
-            ]),
+            'password' => [
+                Rule::when(
+                    $this->routeIs('operators.students.create'),
+                    ['required', 'min:8', 'max:255']
+                ),
+                Rule::when(
+                    $this->routeIs('operators.students.update'),
+                    ['nullable', 'min:8', 'max:255']
+                ),
+            ],
+            'avatar' => ['nullable', 'image', 'mimes:png,jpg,jpeg,webp', 'max:2048'],
             'student_number' => [
                 'required',
                 'string',
                 'max:13',
+                Rule::unique('students', 'student_number')->ignore($this->student),
             ],
-            'batch' => [
-                'required',
-                'integer',
-            ],
-            'avatar' => [
-                'nullable',
-                'mimes:png,jpg,jpeg,webp',
-                'max:2048',
-            ],
-            'feeGroup' => [
-                'required',
-                'exists:fee_groups,id',
-            ],
-            'classroom_id' => [
-                'required',
-                'exists:classrooms,id',
-            ],
+            'semester' => ['required', 'integer', 'min:1'],
+            'batch' => ['required', 'integer'],
+            'fee_group_id' => ['required', 'exists:fee_groups,id'],
+            'classroom_id' => ['required', 'exists:classrooms,id'],
         ];
     }
 
-    public function attiributes(): array
+    public function attributes(): array
     {
         return [
             'name' => 'Nama',
             'email' => 'Email',
             'password' => 'Password',
+            'avatar' => 'Avatar',
             'student_number' => 'Nomor Pokok Mahasiswa',
             'semester' => 'Semester',
             'batch' => 'Angkatan',
-            'feeGroup' => 'Golongan UKT',
+            'fee_group_id' => 'Golongan UKT',
             'classroom_id' => 'Kelas',
         ];
     }

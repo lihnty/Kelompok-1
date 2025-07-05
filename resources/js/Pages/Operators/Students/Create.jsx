@@ -8,7 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { AppLayout } from '@/Layouts/AppLayout';
 import { flashMessage } from "@/lib/utils";
 import { Link, useForm } from "@inertiajs/react";
-import { IconArrowLeft, IconCheck, IconSchool, IconUsers } from "@tabler/icons-react";
+import { IconArrowLeft, IconCheck, IconUsers } from "@tabler/icons-react";
 import { useRef } from "react";
 import { toast } from "sonner";
 
@@ -32,7 +32,7 @@ export default function Create(props) {
     const onHandleSubmit = (e) => {
         e.preventDefault();
         post(props.page_settings.action, {
-            preserveScoll: true,
+            preserveScroll: true,
             preserveState: true,
             onSuccess: (succes) => {
                 const flash = flashMessage(succes);
@@ -123,7 +123,8 @@ export default function Create(props) {
                                         ))}
                                     </SelectContent>
                                 </Select>
-                                {errors.faculty_id && <InputError message={errors.faculty_id} />}
+                                {errors.classroom_id && <InputError message={errors.classroom_id} />}
+
                             </div>
                             <div className="col-span-full">
                                 <Label htmlFor="fee_group_id">Golongan UKT</Label>
@@ -144,7 +145,7 @@ export default function Create(props) {
                                         ))}
                                     </SelectContent>
                                 </Select>
-                                {errors.faculty_id && <InputError message={errors.faculty_id} />}
+                                {errors.classroom_id && <InputError message={errors.classroom_id} />}
                             </div>
                             <div className="col-span-2">
                                 <Label htmlFor="semester">Semester</Label>

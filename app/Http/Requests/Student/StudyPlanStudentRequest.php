@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Http\Requests\Operator;
+namespace App\Http\Requests\Student;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ClassroomOperatorRequest extends FormRequest
+class StudyPlanStudentRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return auth()->check() && auth()->user()->hasRole('Operator');
+        return auth()->check() && auth()->user()->hasRole('Student');
     }
 
     /**
@@ -22,23 +22,18 @@ class ClassroomOperatorRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'academic_year_id' => [
+            'schedule_id' => [
                 'required',
-                'exists:academic_years,name',
-            ],
-            'name' => [
-                'required',
-                'min:3',
-                'max:255',
-                'string',
+                'array',
+                'exists:schedules,id',
             ],
         ];
     }
+
     public function attributes(): array
     {
         return [
-            'academic_year_id' => 'Tahun Ajaran',
-            'name' => 'Nama',
+            'schedule_id' => 'Jadwal',
         ];
     }
 }

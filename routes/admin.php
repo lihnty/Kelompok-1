@@ -118,6 +118,7 @@ Route::prefix('admin')->middleware(['auth', 'role:Admin'])->group(function(){
         Route::get('schedules/{schedule}/edit', 'edit')->name('admin.schedules.edit');
         Route::put('schedules/{schedule}', 'update')->name('admin.schedules.update');
         Route::delete('schedules/{schedule}', 'destroy')->name('admin.schedules.destroy');
+   
     });
         
         Route::controller(OperatorController::class)->group(function () {
@@ -128,13 +129,6 @@ Route::prefix('admin')->middleware(['auth', 'role:Admin'])->group(function(){
             Route::put('operators/edit/{operator:employee_number}', 'update')->name('admin.operators.update');
             Route::delete('operators/destroy/{operator:employee_number}', 'destroy')->name('admin.operators.destroy');
 
-        });
-          
-        Route::controller(ClassroomStudentController::class)->group(function () {
-            Route::get('classroom/students/{classroom:slug}', 'index')->name('admin.classroom-students.index');
-            Route::put('classroom/students/{classroom:slug}/sycn', 'sync')->name('admin.classroom-students.sync');
-            Route::delete('classroom/students/{classroom:slug}/destroy/{student:student_number}', 'destroy')
-                ->name('admin.classroom-students.destroy');
         });
 });
 

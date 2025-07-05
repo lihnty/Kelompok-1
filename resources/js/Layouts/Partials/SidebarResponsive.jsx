@@ -23,7 +23,7 @@ export default function SidebarResponsive({ auth, url }) {
                                 {auth.roles.some((role) => ['Admin'].includes(role)) && (
                                     <>
                                         <NavLink
-                                            url="#"
+                                            url={route('admin.dashboard')}
                                             active={url.startsWith('/admin/dashboard')}
                                             title="Dashboard"
                                             icon={IconLayout2}
@@ -98,7 +98,7 @@ export default function SidebarResponsive({ auth, url }) {
                                 {auth.roles.some((role) => ['Teacher'].includes(role)) && (
                                     <>
                                         <NavLink
-                                            url="#"
+                                            url={route('teachers.dashboard')}
                                             active={url.startsWith('/teachers/dashboard')}
                                             title="Dashboard"
                                             icon={IconLayout2}
@@ -106,14 +106,14 @@ export default function SidebarResponsive({ auth, url }) {
                                         <div className="px-3 py-2 text-xs font-medium text-white">Akademik</div>{' '}
                                         {/* Perbaiki typo "Lainya" */}
                                         <NavLink
-                                            url="#"
+                                            url={route('teachers.cources.index')}
                                             active={url.startsWith('/teachers/cources')}
                                             title="Mata Kuliah"
                                             icon={IconBooks}
                                         />
                                         <NavLink
-                                            url="#"
-                                            active={url.startsWith('/teachers/schedules')}
+                                            url={route('operators.schedules.index')}
+                                            active={url.startsWith('/operators/schedules')}
                                             title="Jadwal"
                                             icon={IconCalendar}
                                         />

@@ -8,13 +8,13 @@ use Illuminate\Support\Facades\Storage;
 
 trait HasFile
 {
-
     public function upload_file(Request $request, string $column, string $folder): string
     {
         return $request->hasFile($column) 
             ? $request->file($column)->store($folder) 
             : ''; // Mengembalikan string kosong sebagai default
     }
+
 
     public function delete_file(Model $model, string $column): void
     {
