@@ -1,7 +1,7 @@
 import StudentLayout from '@/Layouts/StudentLayout';
 import HeaderTitle from '@/Components/HeaderTitle';
 import { Button } from '@/Components/ui/button';
-import { IconBuilding, IconArrowLeft, IconCheck } from '@tabler/icons-react';
+import { IconBuilding, IconArrowLeft, IconCheck, IconArrowBack } from '@tabler/icons-react';
 import { Link, useForm } from '@inertiajs/react';
 import { TableHeader, Table, TableRow, TableHead, TableBody, TableCell } from '@/Components/ui/table';
 import { Checkbox } from '@/Components/ui/checkbox';
@@ -40,13 +40,13 @@ export default function Create(props) {
                 />
                 <Button variant='orange' size='xl' className='w-full lg:w-auto' asChild>
                     <Link href={route('students.study-plans.index')}>
-                        <IconArrowLeft className="size-4"/>
+                        <IconArrowBack className="size-4"/>
                         Kembali
                     </Link>
                 </Button>
             </div>
             <form onSubmit={onHandleSubmit}>
-                <Table>
+                <Table className="w-full">
                     <TableHeader>
                         <TableRow>
                             <TableHead>#</TableHead>
@@ -60,15 +60,15 @@ export default function Create(props) {
                     <TableBody>
                         {props.schedules.map((schedule, index) => (
                             <TableRow key={index} className={cn(
-                                schedule.taken_qouta === schedule.qouta && 'text-red-500'
+                                schedule.taken_quota === schedule.quota && 'text-red-500'
                             )}>
                                 <TableCell>
                                     <Checkbox 
                                         id={`schedule_id_${schedule.id}`}
                                         name="schedule_id"
                                         checked={data.schedule_id.includes(schedule.id)}
-                                        disabled={schedule.taken_qouta === schedule.qouta}
-                                        onChange={(checked) => {
+                                        disabled={schedule.taken_quota === schedule.quota}
+                                        onCheckedChange={(checked) => {
                                             if(checked) {
                                                 setData('schedule_id', [...data.schedule_id, schedule.id]);
                                             } else {
@@ -82,10 +82,10 @@ export default function Create(props) {
                                 <TableCell>{schedule.day_of_week}</TableCell>
                                 <TableCell>{schedule.start_time} - {schedule.end_time}</TableCell>
                                 <TableCell className={cn(
-                                    schedule.taken_qouta === schedule.qouta ? 'text-red-500' : 'text-green-500'
+                                    schedule.taken_quota === schedule.quota ? 'text-red-500' : 'text-green-500'
                                 )}>
-                                    {schedule.taken_qouta} / {schedule.qouta}
-                                </TableCell>
+                                    {schedule.taken_quota} / {schedule.quota}
+                                </TableCell>    
                             </TableRow>
                         ))}
                     </TableBody>
