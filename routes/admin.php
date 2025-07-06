@@ -95,7 +95,7 @@ Route::prefix('admin')->middleware(['auth', 'role:Admin'])->group(function(){
         Route::get('fees', 'index')->name('admin.fees.index');
      });
   
-     Route::controller(ClassroomStudentController::class)->group(function () {
+     Route::controller(ClassroomStudentController::class)->middleware('checkActiveAcademicYear')->group(function () {
         Route::get('classroom/students/{classroom:slug}', 'index')->name('admin.classroom-students.index');
         Route::put('classroom/students/{classroom:slug}/sycn', 'sync')->name('admin.classroom-students.sync');
         Route::delete('classroom/students/{classroom:slug}/destroy/{student:student_number}', 'destroy')

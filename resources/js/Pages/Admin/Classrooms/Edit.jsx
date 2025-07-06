@@ -16,7 +16,7 @@ export default function Edit(props) {
     const { data, setData, post, processing, errors, reset } = useForm({
         faculty_id: props.classroom.faculty_id ?? null,
         department_id: props.classroom.department_id ?? null,
-        academic_year_id: props.academic_year.name,
+        academic_year_id:  '',
         name: props.classroom.name ?? '',
         _method: props.page_settings.method,
     });
@@ -101,7 +101,7 @@ export default function Edit(props) {
                                 </Select>
                                 {errors.department_id && <InputError message={errors.department_id} />}
                             </div>
-                            <div className="col-span-full">
+                            {/* <div className="col-span-full">
                                 <Label htmlFor="academic_year_id">Tahun Ajaran</Label>
                                 <Select
                                     defaultValue={data.academic_year_id}
@@ -121,7 +121,22 @@ export default function Edit(props) {
                                     </SelectContent>
                                 </Select>
                                 {errors.academic_year_id && <InputError message={errors.academic_year_id} />}
-                            </div>
+                            </div> */}
+
+                                                        <div className="col-span-full">
+                                                            <Label htmlFor="academic_year_id">Tahun Ajaran</Label>
+                                                            <Input
+                                                                type="text"
+                                                                id="name"
+                                                                name="name"
+                                                                placeholder="Masukkan nama kelas"
+                                                                value={data.academic_year_id}
+                                                                onChange={onHandleChange}
+                                                                disabled
+                                                            />
+                                                            {errors.academic_year_id && <InputError message={errors.academic_year_id} />}
+                                                        </div>
+                                                    </div>
 
 
                             <div className="col-span-full">
@@ -137,8 +152,6 @@ export default function Edit(props) {
 
                                 {errors.name && <InputError message={errors.name} />}
                             </div>
-                        </div>
-
                         <div className="mt-8 flex flex-col gap-2 lg:flex-row lg:justify-end">
                             <Button type="button" variant="ghost" size="xl" onClick={onHandleReset}>
                                 Reset

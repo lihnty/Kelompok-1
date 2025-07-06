@@ -123,7 +123,7 @@ export default function Edit(props) {
                                         onCheckedChange={(checked) => setData('is_active', checked)}
                                     />
                                     <div className="grid gap-1/5 leading-none">
-                                        <Label htmlFor="is_active">Apakah Aktif</Label>
+                                        <Label htmlFor="is_active">Apakah Aktif?</Label>
                                     </div>
                                 </div>
                                 {errors.is_active && <InputError message={errors.is_active} />}

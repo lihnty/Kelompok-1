@@ -57,34 +57,40 @@ class StudentOperatorController extends Controller
     }
 
     public function create(): Response
-    {
-        return inertia('Operators/Students/Create', [
-            'page_settings' => [
-                'title' => 'Tambah Mahasiswa',
-                'subtitle' => 'Buat mahasiswa baru di sini. Klik simpan setelah selesai',
-                'method' => 'POST',
-                'action' => route('operators.students.store'),
-            ],
-            'classrooms' => Classroom::query()
-                ->select(['id', 'name'])
-                ->where('faculty_id', auth()->user()->operator->faculty_id)
-                ->where('department_id', auth()->user()->operator->department_id)
-                ->orderBy('name')
-                ->get()
-                ->map(fn($item) => [
-                    'value' => $item->id,
-                    'label' => $item->name,
-                ]),
-            'feeGroups' => FeeGroup::query()
-                ->select(['id', 'group', 'amount'])
-                ->orderBy('group')
-                ->get()
-                ->map(fn($item) => [
-                    'value' => $item->id,
-                    'label' => 'Golongan ' . $item->group . ' - ' . number_format($item->amount, 0, ',', '.'),
-                ]),
-        ]);
-    }
+{
+    $classrooms = Classroom::query()
+        ->select(['id', 'name'])
+        ->where('faculty_id', auth()->user()->operator->faculty_id)
+        ->where('department_id', auth()->user()->operator->department_id)
+        ->orderBy('name')
+        ->get()
+        ->map(fn($item) => [
+            'value' => $item->id,
+            'label' => $item->name,
+        ])
+        ->values(); // pastikan array numerik
+
+    $feeGroups = FeeGroup::query()
+        ->select(['id', 'group', 'amount'])
+        ->orderBy('group')
+        ->get()
+        ->map(fn($item) => [
+            'value' => $item->id,
+            'label' => 'Golongan ' . $item->group . ' - ' . number_format($item->amount, 0, ',', '.'),
+        ])
+        ->values();
+
+    return inertia('Operators/Students/Create', [
+        'page_settings' => [
+            'title' => 'Tambah Mahasiswa',
+            'subtitle' => 'Buat mahasiswa baru di sini. Klik simpan setelah selesai',
+            'method' => 'POST',
+            'action' => route('operators.students.store'),
+        ],
+        'classrooms' => $classrooms,
+        'feeGroups' => $feeGroups,
+    ]);
+}
 
     public function store(StudentOperatorRequest $request): RedirectResponse
     {
@@ -120,36 +126,42 @@ class StudentOperatorController extends Controller
            return to_route('operators.students.index');
         }
     }
-    public function edit(Student $student): Response
-    {
-        return inertia('Operators/Students/Edit', [
-            'page_settings' => [
-                'title' => 'Edit Mahasiswa',
-                'subtitle' => 'Edit mahasiswa di sini. Klik simpan setelah selesai',
-                'method' => 'PUT',
-                'action' => route('operators.students.update', $student),
-            ],
-            'student' => $student->load('user'),
-            'classrooms' => Classroom::query()
-                ->select(['id', 'name'])
-                ->where('faculty_id', auth()->user()->operator->faculty_id)
-                ->where('department_id', auth()->user()->operator->department_id)
-                ->orderBy('name')
-                ->get()
-                ->map(fn($item) => [
-                    'value' => $item->id,
-                    'label' => $item->name,
-                ]),
-            'feeGroups' => FeeGroup::query()
-                ->select(['id', 'group', 'amount'])
-                ->orderBy('group')
-                ->get()
-                ->map(fn($item) => [
-                    'value' => $item->id,
-                    'label' => 'Golongan ' . $item->group . ' - ' . number_format($item->amount, 0, ',', '.'),
-                ]),
-        ]);
-    }
+   public function edit(Student $student): Response
+{
+    $classrooms = Classroom::query()
+        ->select(['id', 'name'])
+        ->where('faculty_id', auth()->user()->operator->faculty_id)
+        ->where('department_id', auth()->user()->operator->department_id)
+        ->orderBy('name')
+        ->get()
+        ->map(fn($item) => [
+            'value' => $item->id,
+            'label' => $item->name,
+        ])
+        ->values();
+
+    $feeGroups = FeeGroup::query()
+        ->select(['id', 'group', 'amount'])
+        ->orderBy('group')
+        ->get()
+        ->map(fn($item) => [
+            'value' => $item->id,
+            'label' => 'Golongan ' . $item->group . ' - ' . number_format($item->amount, 0, ',', '.'),
+        ])
+        ->values();
+
+    return inertia('Operators/Students/Edit', [
+        'page_settings' => [
+            'title' => 'Edit Mahasiswa',
+            'subtitle' => 'Edit mahasiswa di sini. Klik simpan setelah selesai',
+            'method' => 'PUT',
+            'action' => route('operators.students.update', $student),
+        ],
+        'student' => $student->load('user'),
+        'classrooms' => $classrooms,
+        'feeGroups' => $feeGroups,
+    ]);
+}
 
     public function update(Student $student, StudentOperatorRequest $request): RedirectResponse
     {
