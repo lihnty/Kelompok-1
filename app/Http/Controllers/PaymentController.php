@@ -130,4 +130,8 @@ class PaymentController extends Controller
         }
     }
     
+    public function success(): Response
+    {
+        return inertia('Payments/Success');
+    }
 }

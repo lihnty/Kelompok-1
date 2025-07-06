@@ -1,7 +1,7 @@
 import StudentLayout from '@/Layouts/StudentLayout';
 import HeaderTitle from '@/Components/HeaderTitle';
 import { IconPlus, IconPencil, IconTrash, IconBuilding, IconEye, IconMoneybag } from '@tabler/icons-react';
-import { Link, usePage } from '@inertiajs/react';
+import { Link, router, usePage } from '@inertiajs/react';
 import { Button } from '@/Components/ui/button';
 import { Card, CardContent, CardHeader, CardFooter } from '@/Components/ui/card';
 import EmptyState from '@/Components/EmptyState';
@@ -19,12 +19,50 @@ import { Badge } from '@/Components/ui/badge';
 import { STUDYPLANSTATUSVARIANT } from '@/lib/utils';
 import { Alert, AlertDescription, AlertTitle } from '@/Components/ui/alert';
 import { Tab } from '@headlessui/react';
+import { first } from 'lodash';
 
 
 export default function Index(props) {
     const auth = usePage().props.auth.user;
     const {data: fees, meta, links}  = props.fees;
     const [params, setParams] = useState(props.state);
+
+    const handlePayment = async () => {
+        try {
+            const response = await axios.post(route('payments.create'), {
+                fee_code: feeCodeGenerator(),
+                gross_amount: auth.student.feeGroup.amount,
+                first_name: auth.name,
+                last_name: 'Klp1',
+                email: auth.email,
+                
+            });
+
+            const snapToken = response.data.snapToken;
+
+            window.snap.pay(snapToken, {
+                onSuccess: function(result) {
+                    toast["success"]("Pembayaran berhasil");
+                    router.get(route('payments.create'));
+                },
+                 
+                onPending: function() {
+                    toast["info"]("Pembayaran sedang diproses");
+                },
+
+                onError: function(result) {
+                    toast["error"](`Kesalahan pembayaran: ${error}`);
+                },
+
+                onClose: function() {
+                    toast["info"]("Pembayaran ditutup");
+                },
+            });
+            
+        } catch (error) {
+            toast["error"](`Kesalahan pembayaran: ${error}`);
+        }
+    }
 
     const onSortable = (field) => {
         setParams({
@@ -92,7 +130,7 @@ export default function Index(props) {
                                             <TableCell>{auth.student.feeGroup.group}</TableCell>
                                             <TableCell>{formatToRupiah(auth.student.feeGroup.amount)}</TableCell>
                                             <TableCell>
-                                                <Button variant='orange'>
+                                                <Button variant='orange' onClick={handlePayment}>
                                                     Bayar
                                                 </Button>
                                             </TableCell>
@@ -103,135 +141,7 @@ export default function Index(props) {
                         </CardContent>
                     </Card>
                 )}
-                    <div className="flex flex-col w-full gap-4 lg:flex-row lg:items-center">
-                        <Input
-                            className="w-full sm:w-1/4" 
-                            value={params?.search}
-                            placeholder="Search..."
-                            onChange={(e) => setParams((prev) => ({...prev, search: e.target.value}))}
-                        />
-                        <Select value={params?.load} onValueChange={(e) => setParams({...params, load: e})}>
-                            <SelectTrigger className="w-full sm:w-24">
-                                <SelectValue placeholder="Load" />
-                            </SelectTrigger>
-                            <SelectContent>
-                                {[10,25,50, 75, 100].map((number, index) => (
-                                <SelectItem key={index} value={number}>
-                                    {number}
-                                </SelectItem>
-                                ))}
-                            </SelectContent>
-                        </Select>
-                        <Button variant='red' onClick={() => setParams(props.state)} size='xl'>
-                            <IconRefresh className="size-4" />
-                            Bersihkan
-                        </Button>
-                    </div>
-
-                    <ShowFilter params={params} />
-                    { fees.length === 0 ? (
-                        <EmptyState
-                            icon={IconMoneybag}
-                            title="Tidak ada Pembayaran"
-                            subtitle="Mulai denagn membuat Pembayaran baru"
-                        />
-                    ) : (
-                        <Table className='w-full'> 
-                            <TableHeader>
-                                <TableRow>
-                                    <TableHead>
-                                        <Button variant='ghost' className='inline-flex group' onClick={() => onSortable('id')}>
-                                            #
-                                            <span className='flex-none ml-2 rounded text-muted-foreground'>
-                                                <IconArrowsDownUp className='size-4' />
-                                            </span>
-                                        </Button>
-                                    </TableHead>
-                                    <TableHead>
-                                        <Button variant='ghost' className='inline-flex group' onClick={() => onSortable('fee_code')}>
-                                            Kode Pembayaran
-                                            <span className='flex-none ml-2 rounded text-muted-foreground'>
-                                                <IconArrowsDownUp className='size-4' />
-                                            </span>
-                                        </Button>
-                                    </TableHead>
-                                    <TableHead>
-                                        <Button variant='ghost' className='inline-flex group' onClick={() => onSortable('fee_group_id')}>
-                                            Golongan
-                                            <span className='flex-none ml-2 rounded text-muted-foreground'>
-                                                <IconArrowsDownUp className='size-4' />
-                                            </span>
-                                        </Button>
-                                    </TableHead>
-                                    <TableHead>
-                                        <Button variant='ghost' className='inline-flex group' onClick={() => onSortable('academic_year_id')}>
-                                            Tahun Ajaran
-                                            <span className='flex-none ml-2 rounded text-muted-foreground'>
-                                                <IconArrowsDownUp className='size-4' />
-                                            </span>
-                                        </Button>
-                                    </TableHead>
-                                    <TableHead>
-                                        <Button variant='ghost' className='inline-flex group' onClick={() => onSortable('semester')}>
-                                            Semester
-                                            <span className='flex-none ml-2 rounded text-muted-foreground'>
-                                                <IconArrowsDownUp className='size-4' />
-                                            </span>
-                                        </Button>
-                                    </TableHead>
-                                    <TableHead>
-                                        <Button variant='ghost' className='inline-flex group' onClick={() => onSortable('status')}>
-                                            Status
-                                            <span className='flex-none ml-2 rounded text-muted-foreground'>
-                                                <IconArrowsDownUp className='size-4' />
-                                            </span>
-                                        </Button>
-                                    </TableHead>
-                                    <TableHead>
-                                        <Button variant='ghost' className='inline-flex group' onClick={() => onSortable('created_at')}>
-                                            Dibuat Pada
-                                            <span className='flex-none ml-2 rounded text-muted-foreground'>
-                                                <IconArrowsDownUp className='size-4' />
-                                            </span>
-                                        </Button>
-                                    </TableHead>
-                                </TableRow>
-                            </TableHeader>
-                            <TableBody>
-                                {fees.map((fee, index) => (
-                                    <TableRow key={index}>
-                                        <TableCell>{index + 1 + (meta.current_page - 1) * meta.per_page}</TableCell>
-                                        <TableCell>{fee.fee_code}</TableCell>
-                                        <TableCell>{fee.feeGroup.group}</TableCell>
-                                        <TableCell>{fee.academicYear.name}</TableCell>
-                                        <TableCell>{fee.semester}</TableCell>
-                                            <TableCell>
-                                                <Badge variant={FEESTATUSVARIANT[fee.status]}>{fee.status}</Badge>
-                                            </TableCell>
-                                        <TableCell>{formatDateIndo(fee.created_at)}</TableCell>
-                                    </TableRow>
-                                ))}
-                            </TableBody>
-                        </Table>
-                    )}
-                
-                    <div className='flex flex-col items-center justify-between w-full gap-y-2 lg:flex-row'>
-                        <p className='text-sm text-muted-foreground'>
-                            Menampilkan <span className='font-medium text-blue-600'>{meta.from ?? 0}</span> dari{''} {meta.total} Pembayaran
-                        </p>
-                        <div className="overflow-x-auto">  
-                            {meta.hasPages && <PaginationTable meta={meta} links={links} />}
-                        </div>
-                    </div>
             </div>
-
-            <Card>
-                <CardHeader className='mb-4 p-0'>
-
-                </CardHeader>
-                <CardContent className='p-0 [&-td]:whitespace-nowrap [&-td]:px-6 [&-th]:px-6'>
-                </CardContent>
-            </Card>
         </div>
     );
 }
