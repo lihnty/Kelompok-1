@@ -222,7 +222,7 @@ class CourseClassroomController extends Controller
             DB::commit();
 
             flashMessage('Berhasil melakukan Perubahan');
-            return to_route('teachers.classrooms.index', [$course, $classroom]);
+            return to_route('teachers.classrooms.index', [$course, $classroom]);    
 
         } catch (Throwable $e) {
             DB::rollBack();

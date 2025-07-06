@@ -7,7 +7,7 @@ use Inertia\Inertia;
 use App\Http\Controllers\Admin\FacultyController;
 use App\Http\Controllers\Admin\OperatorController;
 use App\Http\Controllers\Admin\ScheduleController;
-
+use App\Http\Controllers\PaymentController;
 
 Route::get('/', function () {
     if (auth()->check())
@@ -16,7 +16,7 @@ Route::get('/', function () {
     return to_route('login');
 });
 
-Route::get('/dashboard', function () {
+Route::get('dashboard', function () {
      if (auth()->user()->hasRole('Admin')) {
             return redirect()->intended(route('admin.dashboard', absolute: false));
         } else if (auth()->user()->hasRole('Student')) {
@@ -30,10 +30,10 @@ Route::get('/dashboard', function () {
         }
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+Route::controller(PaymentController::class)->group(function () {
+    Route::get('payments', 'create')->name('payments.create');
+    Route::get('payments/callback', 'callback')->name('payments.callback');
+    Route::get('payments/success', 'success')->name('payments.success');
 });
 
 require __DIR__.'/auth.php';

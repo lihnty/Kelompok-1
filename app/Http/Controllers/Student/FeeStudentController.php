@@ -8,6 +8,7 @@ use Inertia\Response;
 use App\Models\Fee;
 use App\Http\Resources\Student\FeeStudentResource;
 
+
 class FeeStudentController extends Controller
 {
     public function __invoke(): Response
@@ -23,9 +24,9 @@ class FeeStudentController extends Controller
             ->filter(request()->only(['search']))
             ->sorting(request()->only(['field', 'direction']))
             ->where('student_id', auth()->user()->student->id)
-            ->with(['feeGroup', 'academicYear'])                
+            ->with(['feeGroup', 'academicYear'])
             ->paginate(request()->load ?? 10);
-
+ 
             return inertia('Students/Fees/Index', [
                 'page_settings' => [
                     'title' => 'Pembayaran',

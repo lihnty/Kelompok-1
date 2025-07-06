@@ -112,7 +112,7 @@ export default function Create(props) {
                 </div>
             </form>
         </div>
-    );
+    )
 }
 
 Create.layout = (page) => <StudentLayout children={page} title={page.props.page_settings.title} />
