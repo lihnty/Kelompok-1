@@ -12,9 +12,21 @@ trait HasFile
     {
         return $request->hasFile($column) 
             ? $request->file($column)->store($folder) 
-            : ''; // Mengembalikan string kosong sebagai default
+            : ''; 
     }
 
+    public function update_file(Request $request, Model $model, string $column, string $folder): string
+    {
+        if ($request->hasFile($column)) {
+            if ($model->$column && Storage::exists($model->$column)) {
+                Storage::delete($model->$column); 
+            }
+
+            return $request->file($column)->store($folder); 
+        }
+
+        return $model->$column; 
+    }
 
     public function delete_file(Model $model, string $column): void
     {

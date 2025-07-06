@@ -32,7 +32,7 @@ Route::prefix('operators')->middleware(['auth', 'role:Operator'])->group(functio
        Route::delete('students/destroy/{student:student_number}', 'destroy')->name('operators.students.destroy');
    });
 
-   Route::controller(ClassroomOperatorController::class)->group(function () {
+   Route::controller(ClassroomOperatorController::class)->middleware(['checkActiveAcademicYear'])->group(function () {
       Route::get('classrooms', 'index')->name('operators.classrooms.index');
       Route::get('classrooms/create', 'create')->name('operators.classrooms.create');
       Route::post('classrooms/create', 'store')->name('operators.classrooms.store');

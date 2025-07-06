@@ -14,9 +14,20 @@ use App\Http\Resources\Admin\ScheduleResource;
 use App\Models\Schedule;
 use App\Enums\StudyPlanStatus;
 use Illuminate\Support\Facades\DB;
+use App\Http\Resources\Student\StudyPlanStudentResource;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware; 
 
-class StudyPlanStudentController extends Controller
+
+
+class StudyPlanStudentController extends Controller implements HasMiddleware
 {
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('checkFeeStudent', except: ['index']),
+        ];
+    }
     public function index()
     {
         $studyPlans = StudyPlan::query()

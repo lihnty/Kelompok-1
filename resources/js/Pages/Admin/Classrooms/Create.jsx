@@ -15,7 +15,7 @@ export default function Create(props) {
     const { data, setData, post, processing, errors, reset } = useForm({
         faculty_id: null,
         department_id: null,
-        academic_year_id:  props.academic_year.name,
+        academic_year_id: props.default_academic_year_id ?? '',
         name: '',
         _method: props.page_settings.method,
     });
@@ -102,29 +102,29 @@ export default function Create(props) {
                             </div>
                             <div className="col-span-full">
                                 <Label htmlFor="academic_year_id">Tahun Ajaran</Label>
-                                <Select
-                                    defaultValue={data.academic_year_id}
-                                    onValueChange={(value) => setData('academic_year_id', value)}
-                                >
-                                    <SelectTrigger>
-                                        <SelectValue>
-                                            {props.academic_years.find(
-                                                (academic_year) => academic_year.value == data.academic_year_id,
-                                            )?.label ?? 'Pilih Tahun Ajaran'}
-                                        </SelectValue>
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        {props.academic_years.map((academic_year, index) => (
-                                            <SelectItem key={index} value={academic_year.value}>
-                                                {academic_year.label}
-                                            </SelectItem>
-                                        ))}
-                                    </SelectContent>
-                                </Select>
+                                {/* Hidden input untuk mengirim ID ke backend */}
+                                <Input
+                                    type="hidden"
+                                    id="academic_year_id"
+                                    name="academic_year_id"
+                                    value={data.academic_year_id}
+                                />
+                                {/* Input text hanya untuk menampilkan label tahun ajaran */}
+                                <Input
+                                    type="text"
+                                    id="academic_year_label"
+                                    name="academic_year_label"
+                                    placeholder="Tahun Ajaran"
+                                    value={
+                                        props.academic_years.find(
+                                            (academic_year) => academic_year.value == data.academic_year_id
+                                        )?.label || ''
+                                    }
+                                    disabled
+                                    readOnly
+                                />
                                 {errors.academic_year_id && <InputError message={errors.academic_year_id} />}
                             </div>
-
-
                             <div className="col-span-full">
                                 <Label htmlFor="name">Nama</Label>
                                 <Input
@@ -138,7 +138,6 @@ export default function Create(props) {
                                 {errors.name && <InputError message={errors.name} />}
                             </div>
                         </div>
-
                         <div className="mt-8 flex flex-col gap-2 lg:flex-row lg:justify-end">
                             <Button type="button" variant="ghost" size="xl" onClick={onHandleReset}>
                                 Reset
