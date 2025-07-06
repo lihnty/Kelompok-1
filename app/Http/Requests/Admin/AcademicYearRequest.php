@@ -57,7 +57,7 @@ class AcademicYearRequest extends FormRequest
             'start_date' => 'Tanggal DiMulai',
             'end_date' => 'Tanggal Selesai',
             'semester' => 'Semester',
-            'is_active' => 'Apakah Aktif',
+            'is_active' => 'Apakah Aktif?',
         ];
     }
 }

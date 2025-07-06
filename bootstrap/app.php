@@ -18,7 +18,9 @@ return Application::configure(basePath: dirname(__DIR__))
             \App\Http\Middleware\HandleInertiaRequests::class,
             \Illuminate\Http\Middleware\AddLinkHeadersForPreloadedAssets::class,
         ])->alias(aliases: [
-    'role' => SpatieRoleMiddleware::class,
+            'role' => SpatieRoleMiddleware::class,
+            'checkActiveAcademicYear' => \App\Http\Middleware\CheckActiveAcademicYear::class,
+            'checkFeeStudent' => \App\Http\Middleware\CheckFeeStudent::class
         ]);
 
 

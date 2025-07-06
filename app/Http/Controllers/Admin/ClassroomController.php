@@ -43,26 +43,31 @@ class ClassroomController extends Controller
         ]);
     }
 
-    public function create(): Response
-    {
-        return inertia('Admin/Classrooms/Create', [
-            'page_settings' => [
-                'title' => 'Tambah Kelas',
-                'subtitle' => 'Buat kelas baru disini. klik simpan setelah selesai',
-                'method' => 'POST',
-                'action' => route('admin.classrooms.store'),
-            ],
-            'academic_years' => AcademicYear::select('id as value', 'name as label')->orderByDesc('name')->get(),
-            'faculties' => Faculty::select(['id', 'name'])->orderBy('name')->get()->map(fn($item) => [
-                'value' => $item->id,
-                'label' => $item->name,
-            ]),
-            'departments' => Department::select(['id', 'name'])->orderBy('name')->get()->map(fn($item) => [
-                'value' => $item->id,
-                'label' => $item->name,
-            ]),
-        ]);
-    }
+
+public function create(): Response
+{
+    $academic_years = AcademicYear::select('id as value', 'name as label')->orderByDesc('name')->get();
+    $default_academic_year_id = $academic_years->first()?->value ?? null;
+
+    return inertia('Admin/Classrooms/Create', [
+        'page_settings' => [
+            'title' => 'Tambah Kelas',
+            'subtitle' => 'Buat kelas baru disini. klik simpan setelah selesai',
+            'method' => 'POST',
+            'action' => route('admin.classrooms.store'),
+        ],
+        'academic_years' => $academic_years,
+        'default_academic_year_id' => $default_academic_year_id,
+        'faculties' => Faculty::select(['id', 'name'])->orderBy('name')->get()->map(fn($item) => [
+            'value' => $item->id,
+            'label' => $item->name,
+        ]),
+        'departments' => Department::select(['id', 'name'])->orderBy('name')->get()->map(fn($item) => [
+            'value' => $item->id,
+            'label' => $item->name,
+        ]),
+    ]);
+}
 
     public function store(ClassroomRequest $request): RedirectResponse
     {

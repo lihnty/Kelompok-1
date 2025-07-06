@@ -51,17 +51,27 @@ class ClassroomOperatorController extends Controller
         ]);
     }
 
-    public function create(): Response
-    {
-        return inertia('Operators/Classrooms/Create', [
-            'page_settings' => [
-                'title' => 'Tambah Kelas',
-                'subtitle' => 'Buat  kelas baru disini. Klik simpan setelah selesai.',
-                'method' => 'POST',
-                'action' => route('operators.classrooms.store'),
+public function create(): Response
+{
+    $academicYear = activeAcademicYear();
+
+    return inertia('Operators/Classrooms/Create', [
+        'page_settings' => [
+            'title' => 'Tambah Kelas',
+            'subtitle' => 'Buat kelas baru disini. Klik simpan setelah selesai.',
+            'method' => 'POST',
+            'action' => route('operators.classrooms.store'),
+        ],
+        'academic_years' => [
+            [
+                'value' => $academicYear->id,
+                'label' => $academicYear->name,
             ],
-        ]);
-    }
+        ]
+    ]);
+    
+}
+
 
     public function store(ClassroomOperatorRequest $request): RedirectResponse
     {
@@ -84,13 +94,13 @@ class ClassroomOperatorController extends Controller
     public function edit(Classroom $classroom): Response
     {
         return inertia('Operators/Classrooms/Edit', [
-            'page_settings' => [
-                'title' => 'Ubah Kelas',
-                'subtitle' => 'Ubah kelas disini. Klik simpan setelah selesai.',
-                'method' => 'PUT',
-                'action' => route('operators.classrooms.update', $classroom),
-            ],
-            'classroom' => $classroom->load(['academicYear']),
+        'page_settings' => [
+            'title' => 'Ubah Kelas',
+            'subtitle' => 'Ubah kelas disini. Klik simpan setelah selesai.',
+            'method' => 'PUT',
+            'action' => route('operators.classrooms.update', $classroom),
+        ],
+        'classroom' => $classroom->load(['academicYear']),
         ]);
     }
 
