@@ -68,13 +68,13 @@ export default function HeaderStudentLayout({ auth, url }) {
                                                 />
 
                                                 <NavigationMenu
-                                                    url="#"
+                                                    url={route('students.study-results.index')}
                                                     active={url.startsWith('/students/study-results')}
                                                     title="Kartu Hasil Studi"
                                                 />
 
                                                 <NavigationMenu
-                                                    url="#"
+                                                    url={route('students.fees.index')}
                                                     active={url.startsWith('/students/fees')}
                                                     title="Pembayaran"
                                                 />
@@ -181,7 +181,7 @@ export default function HeaderStudentLayout({ auth, url }) {
                                 </Disclosure.Button>
                                 <Disclosure.Button
                                     as="a"
-                                    href="#"
+                                    href={route('students.study-results.index')}
                                     className={cn(
                                         url.startsWith('/students/study-results')
                                             ? 'bg-blue-500 text-white'
@@ -193,7 +193,7 @@ export default function HeaderStudentLayout({ auth, url }) {
                                 </Disclosure.Button>
                                 <Disclosure.Button
                                     as="a"
-                                    href="#"
+                                    href={route('students.fees.index')}
                                     className={cn(
                                         url.startsWith('/students/fees')
                                             ? 'bg-blue-500 text-white'
