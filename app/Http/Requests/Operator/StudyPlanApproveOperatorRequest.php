@@ -4,7 +4,7 @@ namespace App\Http\Requests\Operator;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ClassroomOperatorRequest extends FormRequest
+class StudyPlanApproveOperatorRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,23 +22,21 @@ class ClassroomOperatorRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'academic_year_id' => [
+            'status' => [
                 'required',
-                'exists:academic_years,name',
+                new Enum(StudyPlanStatus::class),
             ],
-            'name' => [
-                'required',
-                'min:3',
-                'max:255',
-                'string',
+            'notes' => [
+                'required_if:status,Reject',
             ],
         ];
     }
+
     public function attributes(): array
     {
         return [
-            'academic_year_id' => 'Tahun Ajaran',
-            'name' => 'Nama',
+            'status' => 'Status',
+            'notes' => 'Catatan',
         ];
     }
 }

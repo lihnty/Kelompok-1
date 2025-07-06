@@ -6,6 +6,10 @@ use App\Http\Controllers\Operator\StudentOperatorController;
 use App\Http\Controllers\Operator\ClassroomOperatorController;
 use App\Http\Controllers\Operator\ScheduleOperatorController;
 use App\Http\Controllers\Operator\CourseOperatorController;
+use App\Http\Controllers\Operator\StudyPlanOperatorController;
+use App\Http\Controllers\Operator\FeeOperatorController;
+use App\Http\Controllers\Operator\StudyResultOperatorController;
+
 
 Route::prefix('operators')->middleware(['auth', 'role:Operator'])->group(function () {
     Route::get('dashboard', DashboardOperatorController::class)->name('operators.dashboard');
@@ -19,7 +23,8 @@ Route::prefix('operators')->middleware(['auth', 'role:Operator'])->group(functio
     Route::delete('teachers/{teacher}', 'destroy')->name('operators.teachers.destroy');
   });
 
-    Route::controller(StudentOperatorController::class)->group(function () {
+
+   Route::controller(StudentOperatorController::class)->group(function () {
        Route::get('students', 'index')->name('operators.students.index');
        Route::get('students/create', 'create')->name('operators.students.create');
        Route::post('students/create', 'store')->name('operators.students.store');
@@ -55,4 +60,13 @@ Route::prefix('operators')->middleware(['auth', 'role:Operator'])->group(functio
       Route::put('courses/edit/{course:code}', 'update')->name('operators.courses.update');
       Route::delete('courses/destroy/{course:code}', 'destroy')->name('operators.courses.destroy');
   });
+
+    Route::controller(StudyPlanOperatorController::class)->group(function () {
+        Route::get('students/{student:student_number}/study-plans', 'index')->name('operators.study-plans.index');
+        Route::get('students/{student:student_number}/study-plans/{studyPlan}/approve', 'approve')->name('operators.study-plans.approve');
+    });
+
+    Route::get('students/{student:student_number}/fees', FeeOperatorController::class)->name('operators.fees.index');
+    Route::get('students/{student:student_number}/study-results', StudyResultOperatorController::class)->name('operators.study-results.index');
+
 });

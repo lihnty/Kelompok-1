@@ -118,6 +118,7 @@ Route::prefix('admin')->middleware(['auth', 'role:Admin'])->group(function(){
         Route::get('schedules/{schedule}/edit', 'edit')->name('admin.schedules.edit');
         Route::put('schedules/{schedule}', 'update')->name('admin.schedules.update');
         Route::delete('schedules/{schedule}', 'destroy')->name('admin.schedules.destroy');
+   
     });
         
         Route::controller(OperatorController::class)->group(function () {
@@ -130,3 +131,4 @@ Route::prefix('admin')->middleware(['auth', 'role:Admin'])->group(function(){
 
         });
 });
+

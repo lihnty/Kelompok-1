@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Student;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\StudyPlan;
-use App\Http\Resources\Student\StudyPlanStudentResource;
 use App\Http\Requests\Student\StudyPlanStudentRequest;
 use App\Http\Resources\Student\StudyPlanScheduleStudentResource;
 use Inertia\Inertia;
@@ -23,10 +22,14 @@ class StudyPlanStudentController extends Controller
         $studyPlans = StudyPlan::query()
             ->select(['id', 'status', 'created_at', 'academic_year_id', 'student_id'])
             ->where('student_id', auth()->user()->student->id)
+
+
             // ->Approve()
+
             ->with(['academicYear'])
             ->latest('created_at')
             ->paginate(request()->load ?? 10);
+
 
             return Inertia  ('Students/StudyPlans/Index', [
             'page_settings' => [
@@ -48,18 +51,22 @@ class StudyPlanStudentController extends Controller
 
     public function create(): Response | RedirectResponse
     {
+
         if(!activeAcademicYear()) return back();
 
         $schedules = Schedule::query()
+
             ->where('faculty_id', auth()->user()->student->faculty_id)
             ->where('department_id', auth()->user()->student->department_id)
             ->where('academic_year_id', activeAcademicYear()->id)
             ->with(['course', 'classroom'])
             ->withCount(['studyPlans as taken_quota' => fn($query) => $query->where('academic_year_id', activeAcademicYear()->id)])
+
             ->orderByDesc('day_of_week')
             ->get();
 
             if($schedules->isEmpty()) {
+
                 flashMessage('Tidak ada jadwal yang tersedia...','warning');
                 return to_route('students.study-plans.index');
             }
@@ -76,14 +83,18 @@ class StudyPlanStudentController extends Controller
                 return to_route('students.study-plans.index');
             }
 
+
         return Inertia('Students/StudyPlans/Create', [
+
             'page_settings' => [
                 'title' => 'Tambah Kartu Rencana Studi',
                 'subtitle' => 'Menambahkan data kartu rencana studi baru.',
                 'method' => 'POST',
                 'action' => route('students.study-plans.store'),
             ],
+
             'schedules' => ScheduleResource::collection($schedules),
+
         ]);
     }
 
@@ -97,7 +108,9 @@ class StudyPlanStudentController extends Controller
                 'academic_year_id' => activeAcademicYear()->id,
             ]);
 
+
             $studyPlan->schedules()->attach($request->schedule_id);
+
 
             DB::commit();
             flashMessage('Berhasil mengajukan KRS');
@@ -119,4 +132,6 @@ class StudyPlanStudentController extends Controller
             'studyPlan' => new StudyPlanScheduleStudentResource($studyPlan->load('schedules')),
         ]);
     }
+
 }
+

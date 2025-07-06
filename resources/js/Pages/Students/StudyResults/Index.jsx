@@ -1,6 +1,6 @@
 import StudentLayout from '@/Layouts/StudentLayout';
 import HeaderTitle from '@/Components/HeaderTitle';
-import { IconSchool } from '@tabler/icons-react';
+import { IconArrowLeft, IconSchool } from '@tabler/icons-react';
 import EmptyState from '@/Components/EmptyState';
 import { formatDateIndo, } from '@/lib/utils';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/Components/ui/table';
@@ -8,6 +8,10 @@ import PaginationTable from '@/Components/PaginationTable';
 import { useState } from 'react';
 import ShowFilter from '@/Components/ShowFilter';
 import Grades from '@/Components/Grades';
+import { Button } from '@/Components/ui/button';
+import Link from 'next/link';
+import { Card, CardHeader, CardContent, CardFooter } from '@/Components/ui/card';
+
 
 
 
@@ -24,11 +28,25 @@ export default function Index(props) {
                     icon={IconSchool}
                 />
 
+                <Button variant='orange' size='xl' className='w-full lg:w-auto' asChild>
+                    <Link href={route('operators.students.index')}>
+                    <IconArrowLeft className="size-4"/>
+                        Kembali
+                    </Link>
+                </Button>
+
             </div>
 
-            <div className="flex flex-col gap-y-8">
+            <Card>
 
+                 <CardHeader className='p-0 mb-4'>
+                        
                     <ShowFilter params={params} />
+
+                     </CardHeader>
+
+                     <CardContent className='p-0 [&-td]:whitespace-nowrap [&-td]:text-sm [&-td]px-6 [&-th]:px-6'>
+
                     { studyResults.length === 0 ? (
                         <EmptyState
                             icon={IconSchool}
@@ -40,6 +58,7 @@ export default function Index(props) {
                             <TableHeader>
                                 <TableRow>
                                     <TableHead>#</TableHead>
+                                    <TableHead>Nomor Pokok Mahasiswa</TableHead>
                                     <TableHead>Tahun Ajaran</TableHead>
                                     <TableHead>Semester</TableHead>
                                     <TableHead>GPA</TableHead>
@@ -68,17 +87,19 @@ export default function Index(props) {
                             </TableBody>
                         </Table>
                     )}
+                    </CardContent>
                 
-                    <div className='flex flex-col items-center justify-between w-full gap-y-2 lg:flex-row'>
+                    <CardFooter className='flex flex-col items-center justify-between w-full gap-y-2 lg:flex-row'>
                         <p className='text-sm text-muted-foreground'>
                             Menampilkan <span className='font-medium text-blue-600'>{meta.from ?? 0}</span> dari{''} {meta.total} Kartu hasil Studi
                         </p>
                         <div className="overflow-x-auto">  
                             {meta.hasPages && <PaginationTable meta={meta} links={links} />}
                         </div>
-                    </div>
+                    </CardFooter>
+               </Card>      
              </div>
-        </div>
+        
     );
 }
 

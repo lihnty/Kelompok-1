@@ -15,15 +15,6 @@ trait HasFile
             : ''; // Mengembalikan string kosong sebagai default
     }
 
-    public function update_file(Request $request, Model $model, string $column, string $folder): string
-    {
-        if ($request->hasFile($column)) {
-            $this->delete_file($model, $column);
-            return $request->file($column)->store($folder);
-        }
-
-        return $model->$column ?? '';
-    }
 
     public function delete_file(Model $model, string $column): void
     {

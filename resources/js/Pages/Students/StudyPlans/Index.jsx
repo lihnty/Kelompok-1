@@ -1,6 +1,6 @@
 import StudentLayout from '@/Layouts/StudentLayout';
 import HeaderTitle from '@/Components/HeaderTitle';
-import { IconPlus, IconPencil, IconTrash, IconBuilding, IconEye } from '@tabler/icons-react';
+import { IconPlus, IconPencil, IconTrash, IconBuilding, IconEye, IconMoneybag } from '@tabler/icons-react';
 import { Link } from '@inertiajs/react';
 import { Button } from '@/Components/ui/button';
 import { Card, CardContent, CardHeader, CardFooter } from '@/Components/ui/card';
@@ -34,6 +34,7 @@ export default function Index(props) {
     useFilter({  //useFilter nya huruf besar seharus nya
         route: route('students.study-plans.index'),
         values: params,
+
         only: ['studyPlans'],
     });
 
@@ -137,8 +138,13 @@ export default function Index(props) {
                                         <TableCell>
                                             <div className="flex items-center gap-x-1">
                                                 <Button variant='blue' size='sm' asChild>
-                                                    <Link href={route('students.study-plans.show', [studyPlan])}>
+                                                    <Link href={route('students.study-plans.index', [studyPlan])}>
                                                         <IconEye className='size-4' />
+                                                    </Link>
+                                                </Button>
+                                                <Button variant='green' size='sm' asChild>
+                                                    <Link href={route('students.fees.index', [studyPlan])}>
+                                                        <IconMoneybag className='size-4' />
                                                     </Link>
                                                 </Button>
                                             </div>

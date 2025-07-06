@@ -51,17 +51,17 @@ export default function Create(props) {
         return (
             <div className="flex flex-col w-full pb-32">
              <div className="mb-8 flex flex-col items-center justify-between gap-y-4 lg:flex-row lg:items-center">
-                                <HeaderTitle
-                                    title={props.page_settings.title}
-                                    subtitle={props.page_settings.subtitle}
-                                    icon={IconBooks}
-                                />
-                                <Button variant='orange' size='xl' className='w-full lg:w-auto' asChild>
-                                    <Link href={route('admin.courses.index')}>
-                                        <IconArrowLeft className="size-4"/>
-                                        Kembali
-                                    </Link>
-                                </Button>
+            <HeaderTitle
+                title={props.page_settings.title}
+                subtitle={props.page_settings.subtitle}
+                icon={IconBooks}
+            />
+            <Button variant='orange' size='xl' className='w-full lg:w-auto' asChild>
+                <Link href={route('admin.courses.index')}>
+                    <IconArrowLeft className="size-4"/>
+                    Kembali
+                </Link>
+            </Button>
              </div>
              <Card>
                 <CardContent className="p-6">
